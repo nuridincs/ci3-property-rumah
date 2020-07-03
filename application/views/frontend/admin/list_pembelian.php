@@ -49,6 +49,7 @@
 										<td>Nama</td>
 										<td>Blok</td>
 										<td>Nama Pembeli</td>
+										<td>Data Document</td>
                     <td>Aksi</td>
 									</tr>
 								</thead>
@@ -59,6 +60,9 @@
 											<td><?= $data->property_name ?></td>
 											<td><?= $data->blok ?></td>
 											<td><?= $data->name ?></td>
+											<td>
+                        <a href="<?= base_url('admin/detailDokumen') ?>" class="btn btn-success btn-sm"><i class="fa fa-file"></i> Lihat Dokumen</a>
+											</td>
                       <td>
                         <a href="/" onclick="return confirm('apakah anda yakin ingin verifikasi data ini?')" class="btn btn-primary btn-sm"><i class="fa fa-check"></i></a>
                         <a onclick="return confirm('apakah anda yakin?')" href="<?= base_url('data/hapus/' . $data->id) ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>

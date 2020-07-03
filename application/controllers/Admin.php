@@ -57,6 +57,13 @@ class Admin extends CI_Controller{
 		$this->load->view('frontend/admin/form/'.$form, $this->data);
 	}
 
+	public function detailDokumen()
+	{
+		$this->data['title'] = 'Detail Dokumen';
+		$this->data['aktif'] = 'dokumen';
+		$this->load->view('frontend/admin/form/dokumen', $this->data);
+	}
+
 	public function cetakLaporan()
 	{
 		$data = $this->admin->getTrx();
