@@ -59,15 +59,14 @@
         <h2> <strong>Harga Mulai dari <?= number_format($item[0]->harga, 2); ?></strong></h2>
         <h3><?= $item[0]->property_name; ?></h3>
         <div>Bekasi</div>
-        <div>Developer: PT Qodau Sukses Propertindo</div>
+        <div>Developer: PT Duta Putra Land</div>
         <hr>
-        <p class="property-description ListingDetailstyle__FormattedContentWrapper-hneQUV ckFCCe">PT. Qodau Sukses Propertindo, perusahaan Joint Ventur besutan PT. Premier Qualitas Indonesia dan PT. Biwel Sukses Bersama mempersembahkan, sebuah hunian eksklusif dengan suasana alam tropis asri yang diberi nama Premier Estate 2.
-          Lokasi perumahan ini cukup strategis, terletak di perbatasan Jakarta Timur tepatnya di Jalan Raya Kodau, Jatiwarna. Lokasi tersebut bisa diakses melalui 2 akses tol, yaitu Tol JORR dan Lingkar Dalam.
-          Selain itu, terdapat berbagai fasilitas umum di sekitar area perumahan, seperti:
+        <p class="property-description ListingDetailstyle__FormattedContentWrapper-hneQUV ckFCCe">Cluster Jasmine merupakan cluster kedua yang dikembangkan di kawasan baru Taman Puri Cendana yang hadir sebagai hunian yang mendukung gaya hidup modern yang seimbang. Cluster Baru di Taman Puri Cendana, Tambun Selatan ini bergaya arsitektur modern kontemporer dengan citra yang natural dan elegant serta dilengkapi dengan berbagai fasilitas yang menunjang.
+          Keunggulan Cluster jasmine :
           <ul>
-            <li>Sekliah bertaraf internasional</li>
-            <li>Pusat perkantoran kawasan TB Simatupang</li>
-            <li>Pusat rekreasi TMII</li>
+            <li>Lokasi Strategis : Cluster Jasmine berlokasi di sisi Selatan Cluster Taman Puri Cendana, Cluster Baru di Taman Puri Cendana hanya berjarak 300 meter dari pintu utama.</li>
+            <li>Arsitektur Modern : Cluster Jasmine memiliki gaya arsitektur modern kontemporer dengan citra natural dan elegan.</li>
+            <li>Lingkungan Aman & Nyaman : Cluster Jasmine didukung dengan jaringan infrastruktur bawah tanah, jalan lingkungan lebar, keamanan 24 jam disertai CCTV.</li>
             <li>Pusat perbelanjaan dan hotel-hotel</li>
             <li>Rumah sakit</li>
             <li>Bandara</li>
@@ -77,8 +76,8 @@
       <div class="col">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">PT Qodau Sukses Propertindo</h5>
-            <p class="card-text">089792342343</p>
+            <h5 class="card-title">PT Duta Putra Land</h5>
+            <p class="card-text">0021-123456</p>
             <a href="<?= base_url() ?>property/booking/<?= $item[0]->id_property ?>" class="btn btn-danger btn-block">Booking Sekarang</a>
           </div>
         </div>

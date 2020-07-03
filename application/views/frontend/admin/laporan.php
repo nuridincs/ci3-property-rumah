@@ -43,16 +43,21 @@
 					</div>
 				<?php endif ?>
 				<div class="card shadow">
-					<div class="card-header"><strong>Daftar Petugas</strong></div>
+					<div class="card-header">
+						<a href="<?= base_url('admin/cetakLaporan') ?>" class="btn btn-info btn-sm">Cetak Laporan</a>
+						<!-- <strong>Laporan</strong> -->
+					</div>
 					<div class="card-body">
 						<div class="table-responsive">
 							<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 								<thead>
 									<tr>
 										<td>No</td>
-										<td>Nama</td>
-										<td>Blok</td>
+										<td>Tipe Rumah</td>
+										<td>Blok Rumah</td>
 										<td>Nama Pembeli</td>
+										<td>Booking Fee</td>
+										<td>Tanggal Booking</td>
                     <td>Aksi</td>
 									</tr>
 								</thead>
@@ -63,6 +68,8 @@
 											<td><?= $data->property_name ?></td>
 											<td><?= $data->blok ?></td>
 											<td><?= $data->name ?></td>
+											<td><?= number_format($data->booking_fee, 0); ?></td>
+											<td><?= $data->created_at ?></td>
                       <td>
                         <a href="<?= base_url('petugas/ubah/' . $data->id) ?>" class="btn btn-success btn-sm"><i class="fa fa-pen"></i></a>
                         <a onclick="return confirm('apakah anda yakin?')" href="<?= base_url('data/hapus/' . $data->id) ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>

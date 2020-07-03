@@ -37,7 +37,10 @@
 					</div>
 				<?php endif ?>
 				<div class="card shadow">
-					<div class="card-header"><strong>Daftar Rumah</strong></div>
+					<div class="card-header">
+						<a href="<?= base_url('admin/form/form_rumah/tambah') ?>" class="btn btn-primary btn-sm">Tambah</a>
+						<strong>Daftar Cluster</strong>
+					</div>
 					<div class="card-body">
 						<div class="table-responsive">
 							<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -58,7 +61,7 @@
 											<td><?= $data->harga ?></td>
 											<td><?= $data->booking_fee ?></td>
                       <td>
-                        <a href="<?= base_url('petugas/ubah/' . $data->id) ?>" class="btn btn-success btn-sm"><i class="fa fa-pen"></i></a>
+                        <a href="<?= base_url('admin/form/form_rumah/edit') ?>" class="btn btn-success btn-sm"><i class="fa fa-pen"></i></a>
                         <a onclick="return confirm('apakah anda yakin?')" href="<?= base_url('data/hapus/' . $data->id) ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                       </td>
 										</tr>

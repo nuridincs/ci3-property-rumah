@@ -24,6 +24,7 @@ class Property extends CI_Controller
       'title' => 'Detail Rumah',
       'item' => $this->property->getDetail($id),
       'gallery' => $this->property->getGallery($id),
+      'aktif' => 'detail'
     ];
     // print_r($data['item']);die;
     $this->load->view('frontend/main/detail', $data);
@@ -34,6 +35,7 @@ class Property extends CI_Controller
     $data = [
       'title' => 'Booking Rumah',
       'item' => $this->property->getDetail($id),
+      'aktif' => 'booking',
       'tenor' => $this->property->getData('app_tenor'),
     ];
     $this->load->view('frontend/main/booking', $data);

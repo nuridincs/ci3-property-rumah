@@ -15,7 +15,8 @@
 				<?php $this->load->view('frontend/partials/topbar.php') ?>
 
 				<div class="container-fluid">
-					<h4>Selamat datang</h4>
+					<h1>Selamat datang di sistem PT. Duta Putra Land</h1>
+					<img src="<?= base_url('assets/img/logo-dpl.png') ?>" class="img-fluid" alt="">
 				</div>
 			</div>
 			<!-- load footer -->
