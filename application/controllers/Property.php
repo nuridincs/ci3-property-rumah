@@ -71,6 +71,9 @@ class Property extends CI_Controller
     $request = $this->input->post();
     $id_user = $this->session->userdata('id');
 
+    $this->db->where('id', $request['blok']);
+    $this->db->update('app_blok', array('status_blok' => 2));
+
     $dataTrx = [
       'id_user' => $id_user,
       'id_blok' => $request['blok'],
@@ -130,8 +133,6 @@ class Property extends CI_Controller
 
   public function konfirmasiPembayaran()
   {
-    // print_r($_FILES);die;
-    // $strInputFileName = "konfirmasi";
     $arrFiles = $_FILES;
 
     $_FILES['konfirmasi']['name'] = $arrFiles['konfirmasi']['name'];
@@ -153,7 +154,6 @@ class Property extends CI_Controller
     {
       print_r($this->upload->display_errors());
     } else {
-      // echo "success";
       $dataKonfirmasi = [
         'status_pembayaran' => 2,
         'bukti_pembayaran' => $arrFiles['konfirmasi']['name'],

@@ -31,7 +31,7 @@ class Admin extends CI_Controller{
 	public function customer(){
     $this->data['title'] = 'Halaman Kelola Customer';
     $this->data['aktif'] = 'customer';
-    $this->data['customer'] = $this->admin->getDataById('app_user', 'user_role', 'admin');
+    $this->data['customer'] = $this->admin->getCustomer('app_user', 'user_role', 'admin');
 		$this->load->view('frontend/admin/list_customer', $this->data);
 	}
 
@@ -63,10 +63,17 @@ class Admin extends CI_Controller{
 		$this->load->view('frontend/admin/form/'.$form, $this->data);
 	}
 
-	public function detailDokumen()
+	public function detailDokumen($type, $id)
 	{
 		$this->data['title'] = 'Detail Dokumen';
 		$this->data['aktif'] = 'dokumen';
+		$this->data['type'] = $type;
+		$this->data['dokumen'] = $this->admin->getDataById('app_document', 'id', $id);
+
+		if ($type == 'pembayaran') {
+			$this->data['dokumen'] = $this->admin->getDataById('app_trx', 'id', $id);
+		}
+
 		$this->load->view('frontend/admin/form/dokumen', $this->data);
 	}
 
@@ -138,5 +145,12 @@ class Admin extends CI_Controller{
 		$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, '', true);
 
 		$pdf->Output('report.pdf', 'I');
+	}
+
+	public function actionUpdateStatus()
+	{
+		$request = $this->input->post();
+		$this->db->where($request['idName'], $request['id']);
+		$this->db->update($request['table'], $request['data']);
 	}
 }

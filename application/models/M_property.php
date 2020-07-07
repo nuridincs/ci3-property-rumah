@@ -15,6 +15,7 @@ class M_property extends CI_Model
               ->from('app_list_property')
               ->join('app_blok', 'app_blok.id_property=app_list_property.id')
               ->where('app_list_property.id', $id)
+              ->where('app_blok.status_blok', '1')
               ->get();
 
     return $query->result();

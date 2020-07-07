@@ -54,7 +54,7 @@
       </tbody>
     </table>
   </div>
-<?php $this->load->view('partials/js.php') ?>
+<?php $this->load->view('frontend/partials/js.php') ?>
 
 </body>
 </html>

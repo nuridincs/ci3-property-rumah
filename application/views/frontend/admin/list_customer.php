@@ -47,6 +47,7 @@
 										<td>Nama</td>
 										<td>email</td>
 										<td>Nomor Telepon</td>
+										<td>Role</td>
                     <td>Aksi</td>
 									</tr>
 								</thead>
@@ -57,6 +58,7 @@
 											<td><?= $data->name ?></td>
 											<td><?= $data->email ?></td>
 											<td><?= $data->phone_number ?></td>
+											<td><?= $data->user_role ?></td>
                       <td>
                         <a href="<?= base_url('admin/form/form_user/edit') ?>" class="btn btn-success btn-sm"><i class="fa fa-pen"></i></a>
                         <a onclick="return confirm('apakah anda yakin?')" href="<?= base_url('data/hapus/' . $data->id) ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>

@@ -20,27 +20,12 @@
 						<h1 class="h3 m-0 text-gray-800"><?= $title ?></h1>
 					</div>
 				</div>
-				<hr>
-				<?php if ($this->session->flashdata('success')) : ?>
-					<div class="alert alert-success alert-dismissible fade show" role="alert">
-						<?= $this->session->flashdata('success') ?>
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-				<?php elseif($this->session->flashdata('error')) : ?>
-					<div class="alert alert-danger alert-dismissible fade show" role="alert">
-						<?= $this->session->flashdata('error') ?>
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-				<?php endif ?>
 				<div class="card shadow">
 					<div class="card-header">
 						<strong>Daftar Pembelian</strong>
 					</div>
 					<div class="card-body">
+						<input type="hidden" id="idSelected">
 						<div class="table-responsive">
 							<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 								<thead>
@@ -49,28 +34,95 @@
 										<td>Nama</td>
 										<td>Blok</td>
 										<td>Nama Pembeli</td>
-										<td>Data Document</td>
+										<td>Data Dokumen</td>
+										<td>Status Pembayaran</td>
                     <td>Aksi</td>
 									</tr>
 								</thead>
 								<tbody>
-									<?php $no = 1; foreach ($pembelian as $data): ?>
+									<?php
+										$no = 0;
+										foreach ($pembelian as $data) {
+											$no++;
+
+											$document = ' <span class="badge badge-success">Lengkap</span>';
+											$statusPembayaran = '<span class="badge badge-success">Sudah di bayar</span>';
+											$konfirmasi = '';
+											$konfirmasiDokumen = '';
+
+											if($data->status_document == 1) {
+												$document = ' <span class="badge badge-danger">Sudah diupload</span>';
+												$konfirmasiDokumen = '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalDocument" onClick="getID(\''.$data->id.'\')"><i class="fa fa-check"></i></button>';
+											}
+
+											if($data->status_pembayaran == 1) {
+												$statusPembayaran = ' <span class="badge badge-warning">Belum dibayar</span>';
+												$konfirmasi = '<button class="btn btn-primary btn-icon btn-sm" data-toggle="modal" data-target="#modalPembayaran" onClick="getID(\''.$data->id_trx.'\')"><i class="fas fa-check"></i></button>';
+											}
+									?>
 										<tr>
 											<td><?= $no++ ?></td>
 											<td><?= $data->property_name ?></td>
 											<td><?= $data->blok ?></td>
 											<td><?= $data->name ?></td>
 											<td>
-                        <a href="<?= base_url('admin/detailDokumen') ?>" class="btn btn-success btn-sm"><i class="fa fa-file"></i> Lihat Dokumen</a>
+												<?= $document ?>
+                        <a href="<?= base_url('admin/detailDokumen/dokumen/'.$data->id) ?>" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
+												<?= $konfirmasiDokumen ?>
+											</td>
+											<td>
+												<?= $statusPembayaran ?>
+												<a href="<?= base_url('admin/detailDokumen/pembayaran/'.$data->id_trx) ?>" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i></a>
+												<?= $konfirmasi ?>
 											</td>
                       <td>
-                        <a href="/" onclick="return confirm('apakah anda yakin ingin verifikasi data ini?')" class="btn btn-primary btn-sm"><i class="fa fa-check"></i></a>
                         <a onclick="return confirm('apakah anda yakin?')" href="<?= base_url('data/hapus/' . $data->id) ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                       </td>
 										</tr>
-									<?php endforeach ?>
+										<?php } ?>
 								</tbody>
 							</table>
+
+							<!-- The Modal -->
+							<div class="modal" id="modalDocument">
+								<div class="modal-dialog">
+									<div class="modal-content">
+
+										<!-- Modal Header -->
+										<div class="modal-header">
+											<h4 class="modal-title">Apakah anda yakin ingin verifikasi dokumen ini?</h4>
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+										</div>
+
+										<!-- Modal footer -->
+										<div class="modal-footer">
+											<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-primary" id="verifikasiDokumen">Submit</button>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+							<div class="modal" id="modalPembayaran">
+								<div class="modal-dialog">
+									<div class="modal-content">
+
+										<!-- Modal Header -->
+										<div class="modal-header">
+											<h4 class="modal-title">Apakah anda yakin ingin verifikasi pembayaran ini?</h4>
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+										</div>
+
+										<!-- Modal footer -->
+										<div class="modal-footer">
+											<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-primary" id="verifikasiPembayaran">Submit</button>
+										</div>
+
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -86,3 +138,43 @@
 	<script src="<?= base_url('sb-admin') ?>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 </body>
 </html>
+
+<script>
+	$("#verifikasiDokumen").click(function() {
+		const id = $('#idSelected').val();
+
+		const formData = {
+      id: id,
+      idName: 'id',
+			table: 'app_document',
+			data: {
+				status_document: 2
+			}
+    }
+
+    $.post('<?= base_url('admin/actionUpdateStatus'); ?>', formData, function( data ) {
+      window.location.reload();
+    });
+	});
+
+	$("#verifikasiPembayaran").click(function() {
+		const id = $('#idSelected').val();
+
+		const formData = {
+      id: id,
+      idName: 'id',
+			table: 'app_trx',
+			data: {
+				status_pembayaran: 2
+			}
+    }
+
+    $.post('<?= base_url('admin/actionUpdateStatus'); ?>', formData, function( data ) {
+      window.location.reload();
+    });
+	});
+
+	function getID(id) {
+		$('#idSelected').val(id);
+	}
+</script>

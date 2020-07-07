@@ -25,17 +25,47 @@
           <div class="m-3">
             <h3>Dokumen</h3>
             <div class="row text-center text-lg-left">
-              <?php
-                for ($i=1; $i <= 3 ; $i++) {?>
-                <div class="col-6">
-                  <div class="card">
-                    <img class="card-img-top" src="<?= base_url() ?>assets/dokumen/<?= $i ?>.jpg" alt="Card image cap" height="400">
-                  </div>
+            <?php if ($type == 'dokumen') { ?>
+              <div class="col-6">
+                <div class="card">
+                  <img class="card-img-top" src="<?= base_url() ?>assets/uploads/<?= $dokumen->ktp ?>" alt="Card image cap" height="400">
                 </div>
-              <?php } ?>
+              </div>
+              <div class="col-6">
+                <div class="card">
+                  <img class="card-img-top" src="<?= base_url() ?>assets/uploads/<?= $dokumen->kk ?>" alt="Card image cap" height="400">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="card">
+                  <img class="card-img-top" src="<?= base_url() ?>assets/uploads/<?= $dokumen->npwp ?>" alt="Card image cap" height="400">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="card">
+                  <img class="card-img-top" src="<?= base_url() ?>assets/uploads/<?= $dokumen->mutasi_rekening ?>" alt="Card image cap" height="400">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="card">
+                  <img class="card-img-top" src="<?= base_url() ?>assets/uploads/<?= $dokumen->surat_keterangan_karyawan ?>" alt="Card image cap" height="400">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="card">
+                  <img class="card-img-top" src="<?= base_url() ?>assets/uploads/<?= $dokumen->slip_gaji ?>" alt="Card image cap" height="400">
+                </div>
+              </div>
+            <?php } else { ?>
+              <div class="col-6">
+                <div class="card">
+                  <img class="card-img-top" src="<?= base_url() ?>assets/uploads/konfirmasi/<?= $dokumen->bukti_pembayaran ?>" alt="Card image cap" height="400">
+                </div>
+              </div>
+            <?php } ?>
             </div>
 
-            <button class="btn btn-primary btn-block">Kembali</button>
+            <a href="javascript:history.go(-1)" class="btn btn-primary btn-block">Kembali</a>
           </div>
         </div>
       </div>
