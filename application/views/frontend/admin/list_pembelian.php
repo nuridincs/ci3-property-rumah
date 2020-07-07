@@ -76,7 +76,7 @@
 												<?= $konfirmasi ?>
 											</td>
                       <td>
-                        <a onclick="return confirm('apakah anda yakin?')" href="<?= base_url('data/hapus/' . $data->id) ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+												<a onclick="return confirm('apakah Anda yakin ingin menghapus data ini?')" href="<?= base_url('admin/actionDelete/app_trx/' . $data->id_trx) ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                       </td>
 										</tr>
 										<?php } ?>

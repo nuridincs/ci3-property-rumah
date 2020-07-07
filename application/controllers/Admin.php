@@ -31,7 +31,7 @@ class Admin extends CI_Controller{
 	public function customer(){
     $this->data['title'] = 'Halaman Kelola Customer';
     $this->data['aktif'] = 'customer';
-    $this->data['customer'] = $this->admin->getCustomer('app_user', 'user_role', 'admin');
+    $this->data['customer'] = $this->admin->getCustomer('app_user', 'user_role', 'customer');
 		$this->load->view('frontend/admin/list_customer', $this->data);
 	}
 
@@ -56,10 +56,15 @@ class Admin extends CI_Controller{
 		$this->load->view('frontend/admin/laporan', $this->data);
 	}
 
-	public function form($form, $action){
+	public function form($form, $action, $table='', $id=''){
     $this->data['title'] = 'Halaman Form';
 		$this->data['aktif'] = $form;
 		$this->data['action'] = $action;
+		$this->data['role'] = $this->admin->getData('app_role');
+		if ($action == 'edit') {
+			$this->data['data'] = $this->admin->getDataById($table, 'id', $id);
+			// print_r($this->data);die;
+		}
 		$this->load->view('frontend/admin/form/'.$form, $this->data);
 	}
 
@@ -150,7 +155,110 @@ class Admin extends CI_Controller{
 	public function actionUpdateStatus()
 	{
 		$request = $this->input->post();
+
 		$this->db->where($request['idName'], $request['id']);
 		$this->db->update($request['table'], $request['data']);
+	}
+
+	public function actionAdd($table)
+	{
+		$redirect = '';
+		$request = $this->input->post();
+
+		if ($table == 'app_list_property') {
+			$redirect = '/listProperty';
+		}
+
+		if ($table == 'app_user') {
+			if ($request['password'] == '') {
+				$request = [
+					'name' => $request['name'],
+					'email' => $request['email'],
+					'phone_number' => $request['phone_number'],
+					'user_role' => $request['user_role'],
+				];
+			} else {
+				$request = [
+					'name' => $request['name'],
+					'email' => $request['email'],
+					'phone_number' => $request['phone_number'],
+					'password' => md5($request['password']),
+					'user_role' => $request['user_role'],
+				];
+			}
+			$redirect = '/listUser';
+		}
+
+		$this->db->insert($table, $request);
+
+		redirect('admin'.$redirect);
+	}
+
+	public function actionUpdate($table, $id)
+	{
+		$redirect = '';
+		$idName = 'id';
+		$request = $this->input->post();
+
+		if ($table == 'app_list_property') {
+			$redirect = '/listProperty';
+		}
+
+		if ($table == 'app_user') {
+			if ($request['password'] == '') {
+				$request = [
+					'name' => $request['name'],
+					'email' => $request['email'],
+					'phone_number' => $request['phone_number'],
+					'user_role' => $request['user_role'],
+				];
+			} else {
+				$request = [
+					'name' => $request['name'],
+					'email' => $request['email'],
+					'phone_number' => $request['phone_number'],
+					'password' => md5($request['password']),
+					'user_role' => $request['user_role'],
+				];
+			}
+
+			$redirect = '/listUser';
+		}
+
+		$this->db->where($idName, $id);
+		$this->db->update($table, $request);
+
+		redirect('admin'.$redirect);
+	}
+
+	public function actionDelete($table, $id)
+	{
+		$redirect = '';
+		$idName = 'id';
+
+		if ($table == 'app_list_property') {
+			$redirect = '/listProperty';
+		}
+
+		if ($table == 'app_user') {
+			$redirect = '/listUser';
+		}
+
+		$request = $this->input->post();
+		$this->db->where($idName, $id);
+		$this->db->delete($table);
+
+		redirect('admin'.$redirect);
+	}
+
+	public function actionDeleteTrx($id)
+	{
+		$this->db->where('id_trx', $id);
+		$this->db->delete('app_document');
+
+		$this->db->where('id', $id);
+		$this->db->delete('app_trx');
+
+		redirect('admin/pembelian');
 	}
 }

@@ -14,42 +14,31 @@ class Auth extends CI_Controller
   }
 
   public function prosesLogin() {
-		// $this->form_validation->set_rules('email','Email','required');
-		// $this->form_validation->set_rules('password','Password','required');
-    // // print_r($this->form_validation->run());die(' test');
+    $email = $this->input->post('email',TRUE);
+    $password = $this->input->post('password',TRUE);
+    $cek = $this->M_auth->cek_user($email, $password);
 
-		// if($this->form_validation->run() === TRUE){
-			$email = $this->input->post('email',TRUE);
-			$password = $this->input->post('password',TRUE);
-      $cek = $this->M_auth->cek_user($email, $password);
+    if ( $cek->num_rows() != 1){
+      $this->session->set_flashdata('msg','Email Dan Password Salah');
+      redirect(base_url('auth'));
+    } else {
+      $user = $cek->row();
+      $data_session = array(
+        'id' => $user->id,
+        'nama' => $user->name,
+        'email' => $user->email,
+        'status' => 'login',
+        'role' => $user->user_role,
+      );
 
-			if( $cek->num_rows() != 1){
-				$this->session->set_flashdata('msg','Email Dan Password Salah');
-				redirect(base_url('auth'));
-			}else {
-				$user = $cek->row();
-        $data_session = array(
-          'id' => $user->id,
-          'nama' => $user->name,
-          'email' => $user->email,
-          'status' => 'login',
-          'role' => $user->user_role,
-        );
+      $this->session->set_userdata($data_session);
 
-        // print_r($data_session);die;
-
-        $this->session->set_userdata($data_session);
-
-        if ($data_session['role'] == 'customer') {
-          redirect(base_url('/'));
-        } else {
-          redirect(base_url('admin'));
-        }
-			}
-		// } else {
-    //   echo "keeke";
-    //   // redirect(base_url());
-    // }
+      if ($data_session['role'] == 'customer') {
+        redirect(base_url('/'));
+      } else {
+        redirect(base_url('admin'));
+      }
+    }
 	}
 
   public function logout()

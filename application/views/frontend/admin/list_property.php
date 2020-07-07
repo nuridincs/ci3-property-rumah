@@ -20,22 +20,6 @@
 						<h1 class="h3 m-0 text-gray-800"><?= $title ?></h1>
 					</div>
 				</div>
-				<hr>
-				<?php if ($this->session->flashdata('success')) : ?>
-					<div class="alert alert-success alert-dismissible fade show" role="alert">
-						<?= $this->session->flashdata('success') ?>
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-				<?php elseif($this->session->flashdata('error')) : ?>
-					<div class="alert alert-danger alert-dismissible fade show" role="alert">
-						<?= $this->session->flashdata('error') ?>
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-				<?php endif ?>
 				<div class="card shadow">
 					<div class="card-header">
 						<a href="<?= base_url('admin/form/form_rumah/tambah') ?>" class="btn btn-primary btn-sm">Tambah</a>
@@ -59,12 +43,12 @@
 										<tr>
 											<td><?= $no++ ?></td>
 											<td><?= $data->property_name ?></td>
-											<td><?= $data->harga ?></td>
-											<td><?= $data->booking_fee ?></td>
+											<td>Rp. <?= number_format($data->harga, 2); ?></td>
+											<td>Rp. <?= number_format($data->booking_fee, 2); ?></td>
 											<td><?= $data->deskripsi ?></td>
                       <td>
-                        <a href="<?= base_url('admin/form/form_rumah/edit') ?>" class="btn btn-success btn-sm"><i class="fa fa-pen"></i></a>
-                        <a onclick="return confirm('apakah anda yakin?')" href="<?= base_url('data/hapus/' . $data->id) ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                        <a href="<?= base_url('admin/form/form_rumah/edit/app_list_property/').$data->id ?>" class="btn btn-success btn-sm"><i class="fa fa-pen"></i></a>
+                        <a onclick="return confirm('apakah Anda yakin ingin menghapus data ini?')" href="<?= base_url('admin/actionDelete/app_list_property/' . $data->id) ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                       </td>
 										</tr>
 									<?php endforeach ?>
