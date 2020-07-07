@@ -5,7 +5,13 @@ class Admin extends CI_Controller{
 		parent::__construct();
 		$this->load->library('Pdf');
 
-    $this->load->model('M_admin', 'admin');
+		$this->load->model('M_admin', 'admin');
+
+    $cekUserLogin = $this->session->userdata('status');
+
+    if ($cekUserLogin != 'login') {
+      redirect('auth');
+    }
 	}
 
 	public function index(){

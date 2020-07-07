@@ -14,20 +14,43 @@
           <th>Type</th>
           <th>Blok</th>
           <th>Status Dokumen</th>
-          <th>Status Pembayarn</th>
+          <th>Status Pembayaran</th>
+          <th>Konfirmasi Pembayaran</th>
         </tr>
       </thead>
       <tbody>
+      <?php
+        $no = 0;
+        foreach ($data as $value) {
+          $no++;
+
+          $document = ' <span class="badge badge-success">Lengkap</span>';
+          $statusPembayaran = '<span class="badge badge-success">Sudah di bayar</span>';
+          $konfirmasi = '<a href="'.base_url('property/detailTrx').'" class="btn btn-info btn-icon btn-sm"><i class="fas fa-eye"></i> Lihat Bukti Pembayaran</a>';
+
+          if($value->status_document == 1) {
+            $document = ' <span class="badge badge-danger">Sedang di cek oleh admin</span>';
+          }
+
+          if($value->status_pembayaran == 1) {
+            $statusPembayaran = ' <span class="badge badge-warning">Belum dibayar</span>';
+            $konfirmasi = '<a href="'.base_url('property/konfirmasi').'" class="btn btn-primary btn-icon btn-sm"><i class="fas fa-check"></i> Konfirmasi</a>';
+          }
+      ?>
         <tr>
-          <td>1</td>
-          <td>CLuster Jasmine</td>
-          <td>AD1</td>
-          <td><span class="badge badge-success">Lengkap</span></td>
+          <td><?= $no; ?></td>
+          <td><?= $value->property_name ?></td>
+          <td><?= $value->blok ?></td>
+          <td><?= $document ?></td>
           <td>
-            <span class="badge badge-warning">Belum di bayar</span>
-            <button class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Konfirmasi Pembayaran"><i class="fas fa-check"></i></button>
+            <?= $statusPembayaran ?>
+            <!-- <button class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Konfirmasi Pembayaran"><i class="fas fa-check"></i></button> -->
+          </td>
+          <td>
+            <?= $konfirmasi ?>
           </td>
         </tr>
+      <?php } ?>
       </tbody>
     </table>
   </div>

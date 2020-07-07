@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>PT. Property Utama - Login</title>
+	<title>PT. Duta Putra Land - Login</title>
 	<link href="<?= base_url('sb-admin') ?>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 	<link href="<?= base_url('sb-admin') ?>/css/sb-admin-2.min.css" rel="stylesheet">
@@ -22,51 +22,45 @@
 	<div class="container">
 
 		<!-- Outer Row -->
-		<div class="row justify-content-center">
-
-			<div class="col-sm-12 col-md-9">
-
+		<div class="justify-content-center">
+			<div class="w-50 m-auto">
 				<div class="card o-hidden border-0 shadow-lg my-5">
 					<div class="card-body p-0">
-						<!-- Nested Row within Card Body -->
-						<div class="row">
-							<div class="col-lg-12">
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="p-5">
-									<div class="text-center">
-									<?php if ($this->session->flashdata('success')) : ?>
-										<div class="alert alert-success alert-dismissible fade show" role="alert">
-											<?= $this->session->flashdata('success') ?>
-											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-									<?php elseif($this->session->flashdata('error')) : ?>
-										<div class="alert alert-danger alert-dismissible fade show" role="alert">
-											<?= $this->session->flashdata('error') ?>
-											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-									<?php endif ?>
-										<h1 class="h4 text-gray-900 mb-4">Login System <br><br><strong>PT. Property UTAMA</strong></h1>
-									</div>
-									<form class="user" method="POST" action="<?= base_url('auth/prosesLogin') ?>">
-										<div class="form-group">
-											<input type="text" class="form-control" value="admin@gmail.com" id="username" placeholder="Masukkan Username" autocomplete="off" required name="username">
-										</div>
-										<div class="form-group">
-											<input type="password" class="form-control" value="123" id="password" placeholder="Masukkan Password" required name="password">
-										</div>
-										<button type="submit" class="btn btn-primary btn-block" name="login">
-											Login
+						<div class="p-5">
+							<div class="text-center">
+								<h1 class="h4 text-gray-900 mb-4">
+									<!-- Login System <br><br> -->
+									<strong>PT. Duta Putra Land</strong>
+								</h1>
+
+								<?php if ($this->session->flashdata('success')) : ?>
+									<div class="alert alert-success alert-dismissible fade show" role="alert">
+										<?= $this->session->flashdata('success') ?>
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
 										</button>
-									</form>
-								</div>
+									</div>
+								<?php elseif($this->session->flashdata('msg')) : ?>
+									<div class="alert alert-danger alert-dismissible fade show" role="alert">
+										<?= $this->session->flashdata('msg') ?>
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+								<?php endif ?>
 							</div>
+							<form method="post" action="<?= base_url('auth/prosesLogin') ?>">
+								<div class="form-group">
+									<input type="text" class="form-control" value="admin@gmail.com" id="email" placeholder="Masukkan Email" autocomplete="off" required name="email">
+								</div>
+								<div class="form-group">
+									<input type="password" class="form-control" value="123" id="password" placeholder="Masukkan Password" required name="password">
+								</div>
+								<button type="submit" class="btn btn-primary btn-block" name="login">
+									Login
+								</button>
+							</form>
+							<small>Belum punya akun? silahkan <a href="/auth/register">register</a></small>
 						</div>
 					</div>
 				</div>

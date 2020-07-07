@@ -11,13 +11,12 @@
     <?php foreach($property as $data){ ?>
       <div class="col-6">
         <div class="card">
-          <a href="property/detail/<?= $data->id; ?>">
-            <img class="card-img-top" src="assets/img/cover/<?= $data->image ?>" alt="Card image cap" height="400">
-            <div class="card-body">
-              <p class="card-text"><?= $data->property_name; ?></p>
-              <div>Harga Mulai <?= number_format($data->harga, 2); ?></div>
-            </div>
-          </a>
+          <img img class="card-img-top" src="assets/img/cover/<?= $data->image ?>" alt="Card image cap" height="400">
+          <div class="card-body">
+            <h5 class="card-title"><?= $data->property_name; ?></h5>
+            <p class="card-text">Harga Mulai <?= number_format($data->harga, 2); ?></p>
+            <a href="property/detail/<?= $data->id; ?>" class="btn btn-danger stretched-link">Lihat Detail</a>
+          </div>
         </div>
       </div>
     <?php } ?>

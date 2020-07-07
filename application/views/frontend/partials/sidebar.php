@@ -3,7 +3,7 @@
 				<!-- <div class="sidebar-brand-icon rotate-n-15"> -->
 					<!-- <i class="fas fa-laugh-wink"></i> -->
 				<!-- </div> -->
-				<div class="sidebar-brand-text mx-3">PT. Property Utama</div>
+				<div class="sidebar-brand-text mx-3">PT. Duta Putra Land</div>
 			</a>
 			<hr class="sidebar-divider my-0">
 			<li class="nav-item <?= $aktif == 'dashboard' ? 'active' : '' ?>">

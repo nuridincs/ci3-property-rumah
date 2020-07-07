@@ -9,11 +9,13 @@
     <h3>Konfirmasi Pembayaran</h3>
     <div class="card">
       <div class="card-body">
-        <div class="form-group">
-          <label for="">Upload Bukti Transfer</label>
-          <input type="file" class="form-control">
-        </div>
-        <button class="btn btn-danger btn-block">Submit</button>
+        <form method="post" action="<?= base_url('property/konfirmasiPembayaran') ?>" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="">Upload Bukti Transfer</label>
+            <input type="file" class="form-control" name="konfirmasi" required>
+          </div>
+          <button class="btn btn-danger btn-block">Submit</button>
+        </form>
       </div>
     </div>
   </div>

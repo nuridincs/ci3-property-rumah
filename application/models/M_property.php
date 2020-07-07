@@ -30,4 +30,19 @@ class M_property extends CI_Model
 
     return $query->result();
   }
+
+  public function getDataTrx()
+  {
+    $query = $this->db->select('*')
+              ->from('app_list_property')
+              ->join('app_blok', 'app_blok.id_property=app_list_property.id')
+              ->join('app_trx', 'app_trx.id_blok=app_blok.id')
+              ->join('app_tenor', 'app_tenor.id=app_trx.id_tenor')
+              ->join('app_user', 'app_user.id=app_trx.id_user')
+              ->join('app_document', 'app_document.id_trx=app_trx.id')
+              ->where('app_user.id', $this->session->userdata('id'))
+              ->get();
+
+    return $query->result();
+  }
 }

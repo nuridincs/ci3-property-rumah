@@ -32,15 +32,6 @@
       <?php
           }
         ?>
-      <!-- <div class="carousel-item active">
-        <img src="<?//= base_url(); ?>/assets/img/jasmine/1.jpeg" alt="Los Angeles" width="100%" height="400">
-      </div> -->
-      <!-- <div class="carousel-item">
-        <img src="<?//= base_url(); ?>/assets/img/jasmine/2.jpeg" alt="Chicago" width="100%" height="400">
-      </div>
-      <div class="carousel-item">
-        <img src="<?//= base_url(); ?>/assets/img/jasmine/3.jpeg" alt="New York" width="100%" height="400">
-      </div> -->
     </div>
 
     <!-- Left and right controls -->
@@ -55,7 +46,6 @@
   <div class="mt-5">
     <div class="row">
       <div class="col-8">
-      <?php //print_r($item);die; ?>
         <h2> <strong>Harga Mulai dari <?= number_format($item[0]->harga, 2); ?></strong></h2>
         <h3><?= $item[0]->property_name; ?></h3>
         <div>Bekasi</div>
@@ -78,7 +68,12 @@
           <div class="card-body">
             <h5 class="card-title">PT Duta Putra Land</h5>
             <p class="card-text">0021-123456</p>
-            <a href="<?= base_url() ?>property/booking/<?= $item[0]->id_property ?>" class="btn btn-danger btn-block">Booking Sekarang</a>
+            <?php if ($this->session->userdata('status') == 'login') { ?>
+              <a href="<?= base_url() ?>property/booking/<?= $item[0]->id_property ?>" class="btn btn-danger btn-block">Booking Sekarang</a>
+            <?php } else { ?>
+              <a href="<?= base_url() ?>property/booking/<?= $item[0]->id_property ?>" class="btn btn-danger btn-block disabled">Booking Sekarang</a>
+              <small>Anda belum login. Silahkan <a href="/auth">login</a> terlebih dahulu agar bisa melakukan booking</small>
+            <?php } ?>
           </div>
         </div>
       </div>

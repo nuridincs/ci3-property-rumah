@@ -13,7 +13,7 @@
       <div>Total DP <span class="badge badge-info">20.000.000</span></div>
       <div>Booking fee <span class="badge badge-success">2.500.000</span></div>
       <br>
-      <form class="my-5">
+      <form class="my-5" method="post" action="<?= base_url('property/submitBooking') ?>" enctype="multipart/form-data">
         <div class="row">
           <div class="col">
             <h4>Pilih Unit</h4><br>
@@ -38,27 +38,27 @@
             <h4>Upload Dokumen</h4><br>
             <div class="form-group">
               <label for=""ktp>KTP</label>
-              <input type="file" name="ktp" class="form-control" required>
+              <input type="file" name="document[]" class="form-control" required>
             </div>
             <div class="form-group">
               <label for="kk">KK</label>
-              <input type="file" name="kk" class="form-control" required>
+              <input type="file" name="document[]" class="form-control" required>
             </div>
             <div class="form-group">
               <label for="npwp">NPWP</label>
-              <input type="file" name="npwp" class="form-control" required>
+              <input type="file" name="document[]" class="form-control" required>
             </div>
             <div class="form-group">
               <label for="mutasi_rekening">Mutasi Rekening</label>
-              <input type="file" name="mutasi_rekening" class="form-control" required>
+              <input type="file" name="document[]" class="form-control" required>
             </div>
             <div class="form-group">
               <label for="skk">Surat Keterangan Kerja</label>
-              <input type="file" name="skk" class="form-control" required>
+              <input type="file" name="document[]" class="form-control" required>
             </div>
             <div class="form-group">
               <label for="slip_gaji">Slip Gaji</label>
-              <input type="file" name="slip_gaji" class="form-control" required>
+              <input type="file" name="document[]" class="form-control" required>
             </div>
           </div>
         </div>
