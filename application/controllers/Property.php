@@ -6,6 +6,7 @@ class Property extends CI_Controller
   {
     parent::__construct();
     $this->load->model('M_property', 'property');
+    $this->load->library('email');
 
     $cekUserLogin = $this->session->userdata('status');
 
@@ -96,6 +97,8 @@ class Property extends CI_Controller
 
     $this->db->insert('app_document', $dataDoc);
 
+    // $this->emailBooking($request['blok']);
+
     $strInputFileName = "document";
     $arrFiles = $_FILES;
     if (is_array($_FILES[$strInputFileName]['name']))
@@ -165,4 +168,81 @@ class Property extends CI_Controller
       redirect('property/transaksi');
     }
   }
+
+  function sendMail()
+  {
+    $config = Array(
+      'protocol' => 'sendmail',
+      'smtp_host' => 'ssl://smtp.googlemail.com',
+      'smtp_port' => 465,
+      'smtp_user' => 'projekdevelopment@gmail.com', // change it to yours
+      'smtp_pass' => 'd3veL0pm3nt', // change it to yours
+      'mailtype' => 'html',
+      'charset' => 'utf-8',
+      'wordwrap' => TRUE
+    );
+
+    $message = 'test booking email';
+    $this->load->library('email', $config);
+    $this->email->set_newline("\r\n");
+    $this->email->from('nuridin.mu23@gmail.com'); // change it to yours
+    $this->email->to('nuridin50@gmail.com');// change it to yours
+    $this->email->subject('Booking Berhasil');
+    $this->email->message($message);
+    if($this->email->send()) {
+      echo 'Email sent.';
+    } else {
+      show_error($this->email->print_debugger());
+    }
+  }
+
+	public function emailBooking(){
+    // die('ik');
+    $id_blok = 1;
+		$data['booking'] = $this->property->getBooking($id_blok);
+    $data['user'] = $this->property->getUser();
+    $email = 'nuridin.mu23@gmail.com';//$data['user']->email;
+
+		// $this->load->view('frontend/email/booking', $data);
+
+    // print_r($data['user']->email);die;
+		$subject = "Booking Berhasil";
+		$msg = 'Test Email Booking';//$this->load->view('frontend/email/booking', $data, TRUE);
+		$ci = get_instance();
+		// $config['protocol'] = "smtp";
+		// $config['smtp_host'] = "ssl://smtp.googlemail.com";
+		// $config['smtp_port'] = "465";
+		// $config['smtp_user'] = "projekdevelopment@gmail.com";
+		// $config['smtp_pass'] = "d3veL0pm3nt";
+		// $config['charset'] = "utf-8";
+		// $config['mailtype'] = "html";
+    // $config['newline'] = "\r\n";
+    $config['smtp_host'] = 'smtp.gmail.com';
+    $config['smtp_port'] = '587';
+    $config['smtp_user'] = 'projekdevelopment@gmail.com';
+    $config['_smtp_auth'] = TRUE;
+    $config['smtp_pass'] = 'd3veL0pm3nt';
+    $config['smtp_crypto'] = 'tls';
+    $config['protocol'] = 'smtp';
+    $config['mailtype'] = 'html';
+    $config['send_multipart'] = FALSE;
+    $config['charset'] = 'utf-8';
+    $config['wordwrap'] = TRUE;
+    // $this->email->initialize($mail_config);
+
+    // $this->email->set_newline("\r\n");
+		$ci->email->initialize($config);
+		$ci->email->from('noreply@ptdutaputraland.com', 'PT. Duta Putra Land');
+		$ci->email->to($email);
+		$ci->email->subject($subject);
+		$ci->email->message($msg);
+    // $this->email->send();
+    if ($this->email->send()) {
+			echo 'Email sent.';
+		} else {
+			show_error($this->email->print_debugger());
+		}
+
+		// redirect('propery/');
+	}
 }

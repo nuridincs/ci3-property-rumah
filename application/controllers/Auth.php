@@ -46,4 +46,27 @@ class Auth extends CI_Controller
     session_destroy();
     redirect('auth');
   }
+
+  public function register()
+  {
+    $this->load->view('frontend/register');
+  }
+
+  public function prosesRegister()
+  {
+    $request = $this->input->post();
+
+    $dataUser = [
+      'name' => $request['name'],
+      'email' => $request['email'],
+      'phone_number' => $request['phone_number'],
+      'password' => md5($request['password']),
+      'user_role' => 'customer',
+    ];
+
+    $this->db->insert('app_user', $dataUser);
+    $this->session->set_flashdata('success','Selamat akun Anda sudah terdaftar. Silahkan login.');
+
+    redirect(base_url('auth'));
+  }
 }

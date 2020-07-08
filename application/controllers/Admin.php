@@ -4,6 +4,7 @@ class Admin extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->library('Pdf');
+		$this->load->library('email');
 
 		$this->load->model('M_admin', 'admin');
 
@@ -258,6 +259,34 @@ class Admin extends CI_Controller{
 
 		$this->db->where('id', $id);
 		$this->db->delete('app_trx');
+
+		redirect('admin/pembelian');
+	}
+
+	public function test()
+	{
+		$this->load->view('frontend/email/booking', true);
+	}
+
+	public function emailVerifikasi(){
+		$emailUser = $data->email_pelanggan;
+		$subject = "Konfirmasi Pembayaran Berhasil";
+		$msg = $this->load->view('email/konfirmasi_pembayaran', $data, TRUE);
+		$ci = get_instance();
+		$config['protocol'] = "smtp";
+		$config['smtp_host'] = "ssl://smtp.googlemail.com";
+		$config['smtp_port'] = "465";
+		$config['smtp_user'] = "projekdevelopment@gmail.com";
+		$config['smtp_pass'] = "d3veL0pm3nt";
+		$config['charset'] = "utf-8";
+		$config['mailtype'] = "html";
+		$config['newline'] = "\r\n";
+		$ci->email->initialize($config);
+		$ci->email->from('noreply@ptdutaputraland.com', 'PT. Duta Putra Land');
+		$ci->email->to($emailUser);
+		$ci->email->subject($subject);
+		$ci->email->message($msg);
+		$this->email->send();
 
 		redirect('admin/pembelian');
 	}

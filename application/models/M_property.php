@@ -46,4 +46,25 @@ class M_property extends CI_Model
 
     return $query->result();
   }
+
+  public function getBooking($id_blok)
+  {
+    $query = $this->db->select('*')
+        ->from('app_list_property')
+        ->join('app_blok', 'app_blok.id_property=app_list_property.id')
+        ->where('app_blok.id', $id_blok)
+        ->get();
+
+    return $query->row();
+  }
+
+  public function getUser()
+  {
+    $query = $this->db->select('*')
+        ->from('app_user')
+        ->where('id', $this->session->userdata('id'))
+        ->get();
+
+    return $query->row();
+  }
 }
