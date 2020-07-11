@@ -7,6 +7,7 @@
   <!-- Page Content -->
 <div class="container">
   <hr class="mt-2 mb-5 mt-5">
+  <h1 class="mb-5">Selamat Datang di PT. Duta Land</h1>
   <div class="row text-center text-lg-left">
     <?php foreach($property as $data){ ?>
       <div class="col-6">

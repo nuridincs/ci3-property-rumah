@@ -49,18 +49,11 @@
         <h2> <strong>Harga Mulai dari <?= number_format($item[0]->harga, 2); ?></strong></h2>
         <h3><?= $item[0]->property_name; ?></h3>
         <div>Bekasi</div>
+        <?php //echo "<pre>";print_r($item); ?>
         <div>Developer: PT Duta Putra Land</div>
         <hr>
-        <p class="property-description ListingDetailstyle__FormattedContentWrapper-hneQUV ckFCCe">Cluster Jasmine merupakan cluster kedua yang dikembangkan di kawasan baru Taman Puri Cendana yang hadir sebagai hunian yang mendukung gaya hidup modern yang seimbang. Cluster Baru di Taman Puri Cendana, Tambun Selatan ini bergaya arsitektur modern kontemporer dengan citra yang natural dan elegant serta dilengkapi dengan berbagai fasilitas yang menunjang.
-          Keunggulan Cluster jasmine :
-          <ul>
-            <li>Lokasi Strategis : Cluster Jasmine berlokasi di sisi Selatan Cluster Taman Puri Cendana, Cluster Baru di Taman Puri Cendana hanya berjarak 300 meter dari pintu utama.</li>
-            <li>Arsitektur Modern : Cluster Jasmine memiliki gaya arsitektur modern kontemporer dengan citra natural dan elegan.</li>
-            <li>Lingkungan Aman & Nyaman : Cluster Jasmine didukung dengan jaringan infrastruktur bawah tanah, jalan lingkungan lebar, keamanan 24 jam disertai CCTV.</li>
-            <li>Pusat perbelanjaan dan hotel-hotel</li>
-            <li>Rumah sakit</li>
-            <li>Bandara</li>
-          </ul>
+        <p class="property-description ListingDetailstyle__FormattedContentWrapper-hneQUV ckFCCe">
+          <?= $item[0]->deskripsi ?>
         </p>
       </div>
       <div class="col">

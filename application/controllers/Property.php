@@ -79,6 +79,8 @@ class Property extends CI_Controller
       'id_user' => $id_user,
       'id_blok' => $request['blok'],
       'id_tenor' => $request['tenor'],
+      'no_ktp' => $request['no_ktp'],
+      'no_npwp' => $request['no_npwp'],
       'created_at' => date('Y-m-d'),
     ];
 
@@ -244,5 +246,40 @@ class Property extends CI_Controller
 		}
 
 		// redirect('propery/');
-	}
+  }
+
+  public function actionDetailRincian()
+  {
+    $request = $this->input->post();
+    $getBlok =$this->property->getDetailByID('app_blok', 'id', $request['id_blok']);
+    $getTenor =$this->property->getDetailByID('app_tenor', 'id', $request['id_tenor']);
+    $maksimumKredit = $getBlok->harga_jual - $getBlok->dp;
+
+    $tenor = $getTenor->jumlah_tenor;
+    $angsuran = ($maksimumKredit * 0.263797) / 12;
+
+    if ($getTenor->jumlah_tenor == 10) {
+      $angsuran = ($maksimumKredit * 0.16275) / 12;
+    }
+
+    if ($getTenor->jumlah_tenor == 15) {
+      $angsuran = ($maksimumKredit * 0.13147) / 12;
+    }
+
+    if ($getTenor->jumlah_tenor == 20) {
+      $angsuran = ($maksimumKredit * 0.11746) / 12;
+    }
+
+    $_view = '<div class="card mt-4">';
+      $_view .= '<div class="card-body">';
+        $_view .= '<h3>Detail Rincian dengan tenor '.$tenor.' tahun</h3>';
+        $_view .= '<div>Harga Jual : <span class="badge badge-danger">Rp. '.number_format($getBlok->harga_jual).'</span></div>';
+        $_view .= '<div>Maksimum Kredit : <span class="badge badge-success">Rp. '.number_format($getBlok->dp).'</span></div>';
+        $_view .= '<div>Total DP : <span class="badge badge-info">Rp. '.number_format($maksimumKredit).'</span></div>';
+        $_view .= '<div>Angsuran per bulan : <span class="badge badge-danger">Rp. '.number_format(round($angsuran)).'</span></div>';
+      $_view .= '</div>';
+    $_view .= '</div>';
+
+    echo $_view;
+  }
 }

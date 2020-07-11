@@ -34,7 +34,7 @@ class M_property extends CI_Model
 
   public function getDataTrx()
   {
-    $query = $this->db->select('*')
+    $query = $this->db->select('*, app_trx.id as id_trx')
               ->from('app_list_property')
               ->join('app_blok', 'app_blok.id_property=app_list_property.id')
               ->join('app_trx', 'app_trx.id_blok=app_blok.id')
@@ -63,6 +63,16 @@ class M_property extends CI_Model
     $query = $this->db->select('*')
         ->from('app_user')
         ->where('id', $this->session->userdata('id'))
+        ->get();
+
+    return $query->row();
+  }
+
+  public function getDetailByID($table, $idName, $id)
+  {
+    $query = $this->db->select('*')
+        ->from($table)
+        ->where($idName, $id)
         ->get();
 
     return $query->row();

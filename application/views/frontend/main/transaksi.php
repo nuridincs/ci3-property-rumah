@@ -26,7 +26,7 @@
 
           $document = ' <span class="badge badge-success">Lengkap</span>';
           $statusPembayaran = '<span class="badge badge-success">Sudah di bayar</span>';
-          $konfirmasi = '<a href="'.base_url('property/detailTrx').'" class="btn btn-info btn-icon btn-sm"><i class="fas fa-eye"></i> Lihat Bukti Pembayaran</a>';
+          $konfirmasi = '<a href="'.base_url('admin/detailDokumen/pembayaran/'.$value->id_trx).'" class="btn btn-info btn-icon btn-sm"><i class="fas fa-eye"></i> Lihat Bukti Pembayaran</a>';
 
           if($value->status_document == 1) {
             $document = ' <span class="badge badge-danger">Sedang di cek oleh admin</span>';
