@@ -56,26 +56,46 @@
 										<td>Tipe Rumah</td>
 										<td>Blok Rumah</td>
 										<td>Nama Pembeli</td>
+										<td>No. Telepon</td>
+										<td>No. KTP</td>
+										<td>No. NPWP</td>
 										<td>Booking Fee</td>
 										<td>Tanggal Booking</td>
+										<td>Harga</td>
                     <td>Aksi</td>
 									</tr>
 								</thead>
 								<tbody>
-									<?php $no = 1; foreach ($pembelian as $data): ?>
+									<?php
+										$no = 1;
+										$totalBooking = 0;
+										$totalOmset = 0;
+										foreach ($pembelian as $data){
+											$totalBooking += $data->booking_fee;
+											$totalOmset += $data->harga_jual;
+									?>
 										<tr>
 											<td><?= $no++ ?></td>
 											<td><?= $data->property_name ?></td>
 											<td><?= $data->blok ?></td>
 											<td><?= $data->name ?></td>
+											<td><?= $data->phone_number ?></td>
+											<td><?= $data->no_ktp ?></td>
+											<td><?= $data->no_npwp ?></td>
 											<td><?= number_format($data->booking_fee, 0); ?></td>
 											<td><?= $data->created_at ?></td>
+											<td><?= number_format($data->harga_jual); ?></td>
                       <td>
                         <a href="<?= base_url('petugas/ubah/' . $data->id) ?>" class="btn btn-success btn-sm"><i class="fa fa-pen"></i></a>
                         <a onclick="return confirm('apakah anda yakin?')" href="<?= base_url('data/hapus/' . $data->id) ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                       </td>
 										</tr>
-									<?php endforeach ?>
+									<?php } ?>
+									<tr>
+										<td colspan="7" align="center">Total</td>
+										<td colspan="2"><?= number_format($totalBooking) ?></td>
+										<td><?= number_format($totalOmset) ?></td>
+									</tr>
 								</tbody>
 							</table>
 						</div>

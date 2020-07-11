@@ -45,7 +45,7 @@ class Admin extends CI_Controller{
 
 	public function listUser(){
     $this->data['title'] = 'Halaman Kelola User';
-    $this->data['user'] = $this->admin->getData('app_user');
+    $this->data['user'] = $this->admin->getUser();
 		$this->data['aktif'] = 'user';
 		$this->load->view('frontend/admin/list_user', $this->data);
 	}
@@ -100,53 +100,78 @@ class Admin extends CI_Controller{
 
 
 		$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN,'',PDF_FONT_SIZE_MAIN));
-		$pdf->setFooterFont(Array(PDF_FONT_NAME_MAIN,'',PDF_FONT_SIZE_MAIN));
+    $pdf->setFooterFont(Array(PDF_FONT_NAME_MAIN,'',PDF_FONT_SIZE_MAIN));
 
-		$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+    $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
-		//set margin
-		$pdf->SetMargins(PDF_MARGIN_LEFT,PDF_MARGIN_TOP + 10,PDF_MARGIN_RIGHT);
-		$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-		$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+    //set margin
+    $pdf->SetMargins(PDF_MARGIN_LEFT,PDF_MARGIN_TOP + 10,PDF_MARGIN_RIGHT);
+    $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+    $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
-		$pdf->SetAutoPageBreak(FALSE, PDF_MARGIN_BOTTOM - 5);
+    $pdf->SetAutoPageBreak(FALSE, PDF_MARGIN_BOTTOM - 5);
 
-		//SET Scaling ImagickPixel
-		$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+    //SET Scaling ImagickPixel
+    $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
-		//FONT Subsetting
-		$pdf->setFontSubsetting(true);
+    //FONT Subsetting
+    $pdf->setFontSubsetting(true);
 
-		$pdf->SetFont('helvetica','',14,'',true);
+    $pdf->SetFont('helvetica','',14,'',true);
 
-		$pdf->AddPage('L');
+    $pdf->AddPage('L');
 
-		$html=
+		$html =
 			'<div>
 				<h1 align="center">Laporan</h1>
 
 				<table border="1" width="100" align="center">
 					<tr>
 						<th style="width:40px" align="center">No</th>
-						<th style="width:150px" align="center">Tipe Rumah</th>
-						<th style="width:150px" align="center">Blok Rumah</th>
-						<th style="width:150px" align="center">Nama Pembeli</th>
-						<th style="width:150px" align="center">Booking Fee</th>
-						<th style="width:200px" align="center">Tanggal Booking</th>
+						<th style="width:100px" align="center">Tipe Rumah</th>
+						<th style="width:60px" align="center">Blok Rumah</th>
+						<th style="width:100px" align="center">Nama Pembeli</th>
+						<th style="width:100px" align="center">No. Telepon</th>
+						<th style="width:100px" align="center">No. KTP</th>
+						<th style="width:100px" align="center">No. NPWP</th>
+						<th style="width:100px" align="center">Booking Fee</th>
+						<th style="width:100px" align="center">Tanggal Booking</th>
+						<th style="width:150px" align="center">Harga</th>
 					</tr>';
 
 					$no = 0;
+					$totalBooking = 0;
+					$totalOmset = 0;
 					foreach($data as $item) {
 						$no++;
+						$totalBooking += $item->booking_fee;
+						$totalOmset += $item->harga_jual;
+
 						$html .= '<tr>
 							<td>'.$no.'</td>
 							<td>'.$item->property_name.'</td>
 							<td>'.$item->blok.'</td>
 							<td>'.$item->name.'</td>
-							<td>'.number_format($item->booking_fee, 0).'</td>
+							<td>'.$item->phone_number.'</td>
+							<td>'.$item->no_ktp.'</td>
+							<td>'.$item->no_npwp.'</td>
+							<td>'.number_format($item->booking_fee).'</td>
 							<td>'.$item->created_at.'</td>
+							<td>'.number_format($item->harga_jual).'</td>
 						</tr>';
-				}
+					}
+
+			$html .= '
+				<tr>
+					<td colspan="7" align="center">Total</td>
+					<td colspan="2">'.number_format($totalBooking).'</td>
+					<td>'.number_format($totalOmset).'</td>
+				</tr>
+			';
+
+			$html .='
+					</table>
+				</div>';
 
 		$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 0, 0, true, '', true);
 

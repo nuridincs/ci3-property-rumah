@@ -29,6 +29,16 @@ class M_admin extends CI_Model
     return $query->result();
   }
 
+  public function getUser()
+  {
+		$query = $this->db->select('*')
+						->from('app_user')
+						->where_not_in('user_role', 'customer')
+            ->get();
+
+    return $query->result();
+  }
+
   public function getTrx()
   {
     $query = $this->db->select('*, app_trx.id as id_trx')
