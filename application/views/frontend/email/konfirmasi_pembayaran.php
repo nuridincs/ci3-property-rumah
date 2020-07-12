@@ -1,11 +1,20 @@
 <div>
-  <p>
-    Dear Customer,
+  <h3>Bukti Pembayaran PT. Duta Putra Land</h3>
+  <strong>
+    Diterima dari: <?= $user->name; ?><br>
+    Banyak uang: <?= $booking_fee ?><br>
+    Pembayaran: Booking Fee
+    <br><br>
 
-    Terimakasih telah melakukan kelengkapan dokumen pada PT. Duta Putra Land.
-    Mohon melakukan pembayaran booking fee sebesar Rp. 3.000.000.
-    Jangan lupa lakukan konfirmasi apabila telah melakukan transaksi.
+    Tipe: <?= $booking->property_name ?><br>
+    Blok: <?= $booking->blok ?><br>
+    No. Kav: <?= $booking->no_kavling ?><br>
+    Lokasi: Taman Puri Cendana<br>
+  </strong><br>
 
-    <strong>Terimakasih</strong
-  </p>
+  <strong>
+    Terimakasih<br>
+    Management<br>
+    PT. Duta Putra Land<br>
+  </strong>
 </div>

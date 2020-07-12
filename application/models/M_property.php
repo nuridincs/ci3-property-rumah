@@ -9,6 +9,16 @@ class M_property extends CI_Model
     return $query->result();
   }
 
+  public function getTenor()
+  {
+    $query = $this->db->select('*')
+						->from('app_tenor')
+						->where_not_in('id', 5)
+            ->get();
+
+    return $query->result();
+  }
+
   public function getDetail($id)
   {
     $query = $this->db->select('*')

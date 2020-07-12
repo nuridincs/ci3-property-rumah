@@ -4,7 +4,6 @@ class Admin extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->library('Pdf');
-		$this->load->library('email');
 
 		$this->load->model('M_admin', 'admin');
 
@@ -182,6 +181,13 @@ class Admin extends CI_Controller{
 	{
 		$request = $this->input->post();
 
+		if ($request['table'] == 'app_trx') {
+			$dataBlok = $this->admin->getDataById($request['table'], $request['idName'], $request['id']);
+			$this->emailVerifikasi($dataBlok);
+		}
+
+		die;
+
 		$this->db->where($request['idName'], $request['id']);
 		$this->db->update($request['table'], $request['data']);
 	}
@@ -288,32 +294,72 @@ class Admin extends CI_Controller{
 		redirect('admin/pembelian');
 	}
 
-	public function test()
-	{
-		$this->load->view('frontend/email/booking', true);
+	public function emailVerifikasi($dataBlok)
+  {
+		$id_blok = $dataBlok->id_blok;
+		$data['booking'] = $this->admin->getBooking($id_blok);
+    $data['user'] = $this->admin->getUserByID($data['booking']->id_user);
+		$data['booking_fee'] = $this->terbilang($data['booking']->booking_fee);
+		$email = $data['user']->email;
+
+		$msg = $this->load->view('frontend/email/konfirmasi_pembayaran', $data, TRUE);
+    $config = Array(
+      'protocol' => 'smtp',
+      'smtp_host' => 'ssl://smtp.googlemail.com',
+      'smtp_port' => 465,
+      'smtp_user' => 'projekdevelopment@gmail.com',
+      'smtp_pass' => 'd3veL0pm3nt',
+      'mailtype' => 'html',
+      'charset' => 'iso-8859-1'
+    );
+    $this->load->library('email', $config);
+    $this->email->set_newline("\r\n");
+    $this->email->from('noreply@ptdutaputraland.com', 'PT. Duta Putra Land');
+    $this->email->to($email);
+    $this->email->subject('Konfirmasi Pembayaran Berhasil');
+    $this->email->message($msg);
+    if (!$this->email->send()) {
+      show_error($this->email->print_debugger());
+    }else{
+      // echo 'Success to send email';
+    }
 	}
 
-	public function emailVerifikasi(){
-		$emailUser = $data->email_pelanggan;
-		$subject = "Konfirmasi Pembayaran Berhasil";
-		$msg = $this->load->view('email/konfirmasi_pembayaran', $data, TRUE);
-		$ci = get_instance();
-		$config['protocol'] = "smtp";
-		$config['smtp_host'] = "ssl://smtp.googlemail.com";
-		$config['smtp_port'] = "465";
-		$config['smtp_user'] = "projekdevelopment@gmail.com";
-		$config['smtp_pass'] = "d3veL0pm3nt";
-		$config['charset'] = "utf-8";
-		$config['mailtype'] = "html";
-		$config['newline'] = "\r\n";
-		$ci->email->initialize($config);
-		$ci->email->from('noreply@ptdutaputraland.com', 'PT. Duta Putra Land');
-		$ci->email->to($emailUser);
-		$ci->email->subject($subject);
-		$ci->email->message($msg);
-		$this->email->send();
+	public function penyebut($nilai) {
+		$nilai = abs($nilai);
+		$huruf = array("", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas");
+		$temp = "";
+		if ($nilai < 12) {
+			$temp = " ". $huruf[$nilai];
+		} else if ($nilai <20) {
+			$temp = $this->penyebut($nilai - 10). " belas";
+		} else if ($nilai < 100) {
+			$temp = $this->penyebut($nilai/10)." puluh". $this->penyebut($nilai % 10);
+		} else if ($nilai < 200) {
+			$temp = " seratus" . $this->penyebut($nilai - 100);
+		} else if ($nilai < 1000) {
+			$temp = $this->penyebut($nilai/100) . " ratus" . $this->penyebut($nilai % 100);
+		} else if ($nilai < 2000) {
+			$temp = " seribu" . $this->penyebut($nilai - 1000);
+		} else if ($nilai < 1000000) {
+			$temp = $this->penyebut($nilai/1000) . " ribu" . $this->penyebut($nilai % 1000);
+		} else if ($nilai < 1000000000) {
+			$temp = $this->penyebut($nilai/1000000) . " juta" . $this->penyebut($nilai % 1000000);
+		} else if ($nilai < 1000000000000) {
+			$temp = $this->penyebut($nilai/1000000000) . " milyar" . $this->penyebut(fmod($nilai,1000000000));
+		} else if ($nilai < 1000000000000000) {
+			$temp = $this->penyebut($nilai/1000000000000) . " trilyun" . $this->penyebut(fmod($nilai,1000000000000));
+		}
+		return $temp;
+	}
 
-		redirect('admin/pembelian');
+	public function terbilang($nilai) {
+		if($nilai<0) {
+			$hasil = "minus ". trim($this->penyebut($nilai));
+		} else {
+			$hasil = trim($this->penyebut($nilai));
+		}
+		return $hasil;
 	}
 
 	public function filterLaporan()

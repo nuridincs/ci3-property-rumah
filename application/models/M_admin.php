@@ -39,6 +39,16 @@ class M_admin extends CI_Model
     return $query->result();
   }
 
+  public function getUserByID($id)
+  {
+    $query = $this->db->select('*')
+        ->from('app_user')
+        ->where('id', $id)
+        ->get();
+
+    return $query->row();
+  }
+
   public function getTrx($request = '')
   {
     $query = $this->db->select('*, app_trx.id as id_trx')
@@ -78,5 +88,19 @@ class M_admin extends CI_Model
               ->get();
 
     return $query->result();
+  }
+
+  public function getBooking($id_blok)
+  {
+    $query = $this->db->select('*')
+        ->from('app_list_property')
+        ->join('app_blok', 'app_blok.id_property=app_list_property.id')
+        ->join('app_trx', 'app_trx.id_blok=app_blok.id')
+        ->where('app_blok.id', $id_blok)
+        ->get();
+
+    // echo $this->db->last_query();
+
+    return $query->row();
   }
 }
