@@ -33,18 +33,28 @@
             </div>
 
             <div class="form-group">
+              <label for="">Tipe Pembayaran</label>
+              <select class="form-control" name="tipe_pembayaran" id="tipe_pembayaran" required>
+                <option value="">--Silahkan Pilih--</option>
+                <option value="1">KPR</option>
+                <option value="2">Cash Keras</option>
+                <option value="3">Cash Bertahap</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="display:none" id="flag_tenor_by_tipe">
               <label for="">Tenor</label>
               <select class="form-control" name="tenor" id="tenor" required>
-                <option value="">--Silahkan Pilih--</option>
+                <option value="5">--Silahkan Pilih--</option>
                 <?php foreach($tenor as $data) { ?>
                   <option value="<?= $data->id ?>"><?= $data->jumlah_tenor ?></option>
                 <?php } ?>
               </select>
             </div>
 
-            <button class="btn btn-danger btn-block" id="actionDetailRincian">Lihat Rincian Angsuran</button>
+            <button class="btn btn-danger btn-block flag_by_tipe" style="display:none" id="actionDetailRincian">Lihat Rincian Angsuran</button>
 
-            <div id="detail-rincian"></div>
+            <div class="flag_by_tipe" style="display:none" id="detail-rincian"></div>
           </div>
 
           <div class="col">
@@ -96,15 +106,18 @@
   $("#actionDetailRincian").click(function() {
     const id_blok = $('#blok').val();
     const id_tenor = $('#tenor').val();
+    const tipe = $('#tipe_pembayaran').val();
 
     if (id_blok == '') {
       alert('Blok belum di pilih');
       return false;
     }
 
-    if (id_tenor == '') {
-      alert('Tenor belum di pilih');
-      return false;
+    if (tipe == 1) {
+      if (id_tenor == 5) {
+        alert('Tenor belum di pilih');
+        return false;
+      }
     }
 
     const formData = {
@@ -113,8 +126,26 @@
     }
 
     $.post('<?= base_url('property/actionDetailRincian'); ?>', formData, function( data ) {
-      // window.location.reload();
       $('#detail-rincian').html(data);
     });
+  });
+
+  $('#tipe_pembayaran').change(function() {
+    $('#tenor').val(5);
+    $('#detail-rincian').html('');
+
+    const tipe = $('#tipe_pembayaran').val();
+
+    $('.flag_by_tipe').attr('style', 'display:none;');
+    $('#flag_tenor_by_tipe').attr('style', 'display:none;');
+
+    if (tipe == 1) {
+      $('.flag_by_tipe').attr('style', 'display:block;');
+      $('#flag_tenor_by_tipe').attr('style', 'display:block;');
+    }
+
+    if (tipe == 3) {
+      $('.flag_by_tipe').attr('style', 'display:block;');
+    }
   });
 </script>

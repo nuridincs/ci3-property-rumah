@@ -83,7 +83,7 @@
 											<td><?= $data->no_ktp ?></td>
 											<td><?= $data->no_npwp ?></td>
 											<td><?= number_format($data->booking_fee, 0); ?></td>
-											<td><?= $data->created_at ?></td>
+											<td><?= date('d-m-Y', strtotime($data->created_at)) ?></td>
 											<td><?= number_format($data->harga_jual); ?></td>
                       <td>
                         <a href="<?= base_url('petugas/ubah/' . $data->id) ?>" class="btn btn-success btn-sm"><i class="fa fa-pen"></i></a>

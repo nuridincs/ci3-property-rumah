@@ -81,6 +81,7 @@ class Property extends CI_Controller
       'id_tenor' => $request['tenor'],
       'no_ktp' => $request['no_ktp'],
       'no_npwp' => $request['no_npwp'],
+      'tipe_pembayaran' => $request['tipe_pembayaran'],
       'created_at' => date('Y-m-d'),
     ];
 
@@ -251,6 +252,17 @@ class Property extends CI_Controller
   public function actionDetailRincian()
   {
     $request = $this->input->post();
+    $_view = $this->tipeCashBertahap($request);
+
+    if ($request['id_tenor'] != 5) {
+      $_view = $this->tipeKPR($request);
+    }
+
+    echo $_view;
+  }
+
+  public function tipeKPR($request)
+  {
     $getBlok =$this->property->getDetailByID('app_blok', 'id', $request['id_blok']);
     $getTenor =$this->property->getDetailByID('app_tenor', 'id', $request['id_tenor']);
     $maksimumKredit = $getBlok->harga_jual - $getBlok->dp;
@@ -280,6 +292,21 @@ class Property extends CI_Controller
       $_view .= '</div>';
     $_view .= '</div>';
 
-    echo $_view;
+    return $_view;
+  }
+
+  public function tipeCashBertahap($request)
+  {
+    $getBlok =$this->property->getDetailByID('app_blok', 'id', $request['id_blok']);
+
+    $_view = '<div class="card mt-4">';
+      $_view .= '<div class="card-body">';
+        $_view .= '<h3>Detail Rincian dengan cara cash bertahap 15 bulan</h3>';
+        $_view .= '<div>Harga Jual : <span class="badge badge-danger">Rp. '.number_format($getBlok->harga_jual).'</span></div>';
+        $_view .= '<div>Angsuran per bulan : <span class="badge badge-success">Rp. '.number_format(round($getBlok->harga_jual / 15)).'</span></div>';
+      $_view .= '</div>';
+    $_view .= '</div>';
+
+    return $_view;
   }
 }

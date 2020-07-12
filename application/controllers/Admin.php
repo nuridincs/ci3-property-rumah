@@ -99,17 +99,17 @@ class Admin extends CI_Controller{
 		// $pdf->SetFooterData(array(255, 255, 255), array(255, 255, 255));
 
 
-		$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN,'',PDF_FONT_SIZE_MAIN));
-    $pdf->setFooterFont(Array(PDF_FONT_NAME_MAIN,'',PDF_FONT_SIZE_MAIN));
+		// $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN,'',PDF_FONT_SIZE_MAIN));
+    // $pdf->setFooterFont(Array(PDF_FONT_NAME_MAIN,'',PDF_FONT_SIZE_MAIN));
 
     $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
     //set margin
-    $pdf->SetMargins(PDF_MARGIN_LEFT,PDF_MARGIN_TOP + 10,PDF_MARGIN_RIGHT);
-    $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-    $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+    // $pdf->SetMargins(PDF_MARGIN_LEFT,PDF_MARGIN_TOP + 10,PDF_MARGIN_RIGHT);
+    // $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+    // $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
-    $pdf->SetAutoPageBreak(FALSE, PDF_MARGIN_BOTTOM - 5);
+    // $pdf->SetAutoPageBreak(FALSE, PDF_MARGIN_BOTTOM - 5);
 
     //SET Scaling ImagickPixel
     $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
@@ -123,7 +123,7 @@ class Admin extends CI_Controller{
 
 		$html =
 			'<div>
-				<h1 align="center">Laporan</h1>
+				<h1 align="center">Laporan Penjualan</h1>
 
 				<table border="1" width="100" align="center">
 					<tr>
@@ -156,7 +156,7 @@ class Admin extends CI_Controller{
 							<td>'.$item->no_ktp.'</td>
 							<td>'.$item->no_npwp.'</td>
 							<td>'.number_format($item->booking_fee).'</td>
-							<td>'.$item->created_at.'</td>
+							<td>'.date('d-m-Y', strtotime($item->created_at)).'</td>
 							<td>'.number_format($item->harga_jual).'</td>
 						</tr>';
 					}
