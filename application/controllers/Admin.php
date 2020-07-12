@@ -315,4 +315,13 @@ class Admin extends CI_Controller{
 
 		redirect('admin/pembelian');
 	}
+
+	public function filterLaporan()
+	{
+		$request = $this->input->post();
+		$this->data['title'] = 'Halaman Laporan';
+    $this->data['pembelian'] = $this->admin->getTrx($request);
+		$this->data['aktif'] = 'laporan';
+		$this->load->view('frontend/admin/laporan', $this->data);
+	}
 }

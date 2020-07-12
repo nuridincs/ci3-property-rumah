@@ -44,6 +44,26 @@
 				<?php endif ?>
 				<div class="card shadow">
 					<div class="card-header">
+						<form method="post" action="<?= base_url('admin/filterLaporan') ?>">
+							<div class="row">
+								<div class="col">
+									<div class="form-group">
+										<label>Tanggal Awal:</label>
+										<input data-date-format="dd-mm-yyyy" class="form-control" name="date_from" id="date_from" required>
+									</div>
+								</div>
+								<div class="col">
+									<div class="form-group">
+										<label>Tanggal Akhir:</label>
+										<input data-date-format="dd-mm-yyyy" class="form-control" name="date_to" id="date_to" required>
+									</div>
+								</div>
+								<div class="col d-flex align-items-center">
+									<button class="btn btn-danger btn-sm">Filter</button>&nbsp;
+									<a href="<?= base_url('admin/laporan') ?>" class="btn btn-primary btn-sm">Refresh</a>
+								</div>
+							</div>
+						</form>
 						<a href="<?= base_url('admin/cetakLaporan') ?>" class="btn btn-info btn-sm">Cetak Laporan</a>
 						<!-- <strong>Laporan</strong> -->
 					</div>
@@ -108,8 +128,20 @@
 		</div>
 	</div>
 	<?php $this->load->view('frontend/partials/js.php') ?>
-	<script src="<?= base_url('sb-admin/js/demo/datatables-demo.js') ?>"></script>
-	<script src="<?= base_url('sb-admin') ?>/vendor/datatables/jquery.dataTables.min.js"></script>
-	<script src="<?= base_url('sb-admin') ?>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 </body>
 </html>
+
+<script>
+$(function() {
+	$('#date_from').datepicker();
+	$('#date_to').datepicker();
+
+	$('#date_from').on('changeDate', function(ev){
+		$(this).datepicker('hide');
+	});
+
+	$('#date_to').on('changeDate', function(ev){
+		$(this).datepicker('hide');
+	});
+});
+</script>
