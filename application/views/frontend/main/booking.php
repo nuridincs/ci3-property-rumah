@@ -11,6 +11,8 @@
       <h3>Silahkan Lengkapi Data</h3>
       <hr>
 
+      <?php if (count($item) > 0){ ?>
+
       <h4><?= $item[0]->property_name; ?></h4>
       <div>Harga Jual <span class="badge badge-danger"><?= number_format($item[0]->harga); ?></span></div>
       <div>Total DP <span class="badge badge-info"><?= number_format($item[0]->dp); ?></span></div>
@@ -95,6 +97,8 @@
         </div>
         <button class="btn btn-danger btn-block">Submit</button>
       </form>
+
+      <?php } else { echo "<h1>Data Kavling tidak tersedia</h1>";  } ?>
     </div>
   </div>
 

@@ -186,8 +186,6 @@ class Admin extends CI_Controller{
 			$this->emailVerifikasi($dataBlok);
 		}
 
-		die;
-
 		$this->db->where($request['idName'], $request['id']);
 		$this->db->update($request['table'], $request['data']);
 	}
@@ -257,6 +255,17 @@ class Admin extends CI_Controller{
 			$redirect = '/listUser';
 		}
 
+		if ($table == 'app_customer') {
+			$table = 'app_user';
+			$request = [
+				'name' => $request['name'],
+				// 'email' => $request['email'],
+				'phone_number' => $request['phone_number'],
+				// 'user_role' => $request['user_role'],
+			];
+			$redirect = '/customer';
+		}
+
 		$this->db->where($idName, $id);
 		$this->db->update($table, $request);
 
@@ -274,6 +283,11 @@ class Admin extends CI_Controller{
 
 		if ($table == 'app_user') {
 			$redirect = '/listUser';
+		}
+
+		if ($table == 'app_customer') {
+			$table = 'app_user';
+			$redirect = '/customer';
 		}
 
 		$request = $this->input->post();

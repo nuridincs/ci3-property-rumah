@@ -28,11 +28,10 @@ class Property extends CI_Controller
   {
     $data = [
       'title' => 'Detail Rumah',
-      'item' => $this->property->getDetail($id),
+      'item' => $this->property->getDetailAll($id),
       'gallery' => $this->property->getGallery($id),
       'aktif' => 'detail'
     ];
-    // print_r($data['item']);die;
     $this->load->view('frontend/main/detail', $data);
   }
 

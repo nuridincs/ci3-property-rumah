@@ -47,8 +47,8 @@
 											<td><?= $data->phone_number ?></td>
 											<td><?= $data->user_role ?></td>
                       <td>
-                        <a href="<?= base_url('admin/form/form_user/edit/app_user/').$data->id ?>" class="btn btn-success btn-sm"><i class="fa fa-pen"></i></a>
-                        <a onclick="return confirm('apakah Anda yakin ingin menghapus data ini?')" href="<?= base_url('admin/actionDeleteTrx/' . $data->id) ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                        <a href="<?= base_url('admin/form/form_customer/edit/app_user/').$data->id ?>" class="btn btn-success btn-sm"><i class="fa fa-pen"></i></a>
+                        <!-- <a onclick="return confirm('apakah Anda yakin ingin menghapus data ini?')" href="<?//= base_url('admin/actionDelete/app_customer/' . $data->id) ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a> -->
                       </td>
 										</tr>
 									<?php endforeach ?>

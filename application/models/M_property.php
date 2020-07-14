@@ -27,7 +27,18 @@ class M_property extends CI_Model
               ->where('app_list_property.id', $id)
               ->where('app_blok.status_blok', '1')
               ->get();
+    // echo $this->db->last_query();die;
+    return $query->result();
+  }
 
+  public function getDetailAll($id)
+  {
+    $query = $this->db->select('*')
+              ->from('app_list_property')
+              ->join('app_blok', 'app_blok.id_property=app_list_property.id')
+              ->where('app_list_property.id', $id)
+              ->get();
+    // echo $this->db->last_query();die;
     return $query->result();
   }
 
