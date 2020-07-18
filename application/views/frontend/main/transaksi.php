@@ -20,37 +20,42 @@
       </thead>
       <tbody>
       <?php
-        $no = 0;
-        foreach ($data as $value) {
-          $no++;
+        // echo count($data);
+        if ($row > 0) {
+          $no = 0;
+          foreach ($data as $value) {
+            $no++;
 
-          $document = ' <span class="badge badge-success">Lengkap</span>';
-          $statusPembayaran = '<span class="badge badge-success">Sudah di bayar</span>';
-          $konfirmasi = '<a href="'.base_url('admin/detailDokumen/pembayaran/'.$value->id_trx).'" class="btn btn-info btn-icon btn-sm"><i class="fas fa-eye"></i> Lihat Bukti Pembayaran</a>';
+            $document = ' <span class="badge badge-success">Lengkap</span>';
+            $statusPembayaran = '<span class="badge badge-success">Sudah di bayar</span>';
+            $konfirmasi = '<a href="'.base_url('property/detailDokumen/pembayaran/'.$value->id_trx).'" class="btn btn-info btn-icon btn-sm"><i class="fas fa-eye"></i> Lihat Bukti Pembayaran</a>';
 
-          if($value->status_document == 1) {
-            $document = ' <span class="badge badge-danger">Sedang di cek oleh admin</span>';
-          }
+            if($value->status_document == 1) {
+              $document = ' <span class="badge badge-danger">Sedang di cek oleh admin</span>';
+            }
 
-          if($value->status_pembayaran == 1) {
-            $statusPembayaran = ' <span class="badge badge-warning">Belum dibayar</span>';
-            $konfirmasi = '<a href="'.base_url('property/konfirmasi').'" class="btn btn-primary btn-icon btn-sm"><i class="fas fa-check"></i> Konfirmasi</a>';
-          }
-      ?>
-        <tr>
-          <td><?= $no; ?></td>
-          <td><?= $value->property_name ?></td>
-          <td><?= $value->blok ?></td>
-          <td><?= $document ?></td>
-          <td>
-            <?= $statusPembayaran ?>
-            <!-- <button class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Konfirmasi Pembayaran"><i class="fas fa-check"></i></button> -->
-          </td>
-          <td>
-            <?= $konfirmasi ?>
-          </td>
-        </tr>
-      <?php } ?>
+            if($value->status_pembayaran == 1) {
+              $statusPembayaran = ' <span class="badge badge-warning">Belum dibayar</span>';
+              $konfirmasi = '<a href="'.base_url('property/konfirmasi').'" class="btn btn-primary btn-icon btn-sm"><i class="fas fa-check"></i> Konfirmasi</a>';
+            }
+        ?>
+          <tr>
+            <td><?= $no; ?></td>
+            <td><?= $value->property_name ?></td>
+            <td><?= $value->blok ?></td>
+            <td><?= $document ?></td>
+            <td>
+              <?= $statusPembayaran ?>
+              <!-- <button class="btn btn-primary btn-circle" data-toggle="tooltip" data-placement="top" title="Konfirmasi Pembayaran"><i class="fas fa-check"></i></button> -->
+            </td>
+            <td>
+              <?= $konfirmasi ?>
+            </td>
+          </tr>
+        <?php } ?>
+      <?php } else {
+        echo "<tr align='center'><td colspan='6'><h3>Data Tidak Ditemukan</h3></td></tr>";
+      } ?>
       </tbody>
     </table>
   </div>

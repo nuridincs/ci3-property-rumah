@@ -51,7 +51,8 @@ class Property extends CI_Controller
     $data = [
       'title' => 'Data Booking Rumah',
       'aktif' => 'trx',
-      'data' => $this->property->getDataTrx()
+      'data' => $this->property->getDataTrx(),
+      'row' => count($this->property->getDataTrx())
     ];
     $this->load->view('frontend/main/transaksi', $data);
   }
@@ -161,7 +162,7 @@ class Property extends CI_Controller
     } else {
       $dataKonfirmasi = [
         'status_pembayaran' => 2,
-        'bukti_pembayaran' => $arrFiles['konfirmasi']['name'],
+        'bukti_pembayaran' => time().'-'.$arrFiles['konfirmasi']['name'],
       ];
 
       $this->db->where('id_user', $this->session->userdata('id'));
@@ -261,4 +262,18 @@ class Property extends CI_Controller
 
     return $_view;
   }
+
+  public function detailDokumen($type, $id)
+	{
+		$this->data['title'] = 'Detail Dokumen';
+		$this->data['aktif'] = 'dokumen';
+		$this->data['type'] = $type;
+		$this->data['dokumen'] = $this->property->getDetailByID('app_document', 'id', $id);
+
+		if ($type == 'pembayaran') {
+			$this->data['dokumen'] = $this->property->getDetailByID('app_trx', 'id', $id);
+		}
+
+		$this->load->view('frontend/main/dokumen', $this->data);
+	}
 }

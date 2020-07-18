@@ -46,7 +46,7 @@
 											$no++;
 
 											$document = ' <span class="badge badge-success">Lengkap</span>';
-											$statusPembayaran = '<span class="badge badge-success">Sudah di bayar</span>';
+											$statusPembayaran = '<span class="badge badge-success">Pembayaran dikonfirmasi</span>';
 											$konfirmasi = '';
 											$konfirmasiDokumen = '';
 
@@ -57,6 +57,11 @@
 
 											if($data->status_pembayaran == 1) {
 												$statusPembayaran = ' <span class="badge badge-warning">Belum dibayar</span>';
+												$konfirmasi = '<button class="btn btn-primary btn-icon btn-sm" data-toggle="modal" data-target="#modalPembayaran" onClick="getID(\''.$data->id_trx.'\')"><i class="fas fa-check"></i></button>';
+											}
+
+											if($data->status_pembayaran == 2) {
+												$statusPembayaran = '<span class="badge badge-success">Sudah di bayar</span>';
 												$konfirmasi = '<button class="btn btn-primary btn-icon btn-sm" data-toggle="modal" data-target="#modalPembayaran" onClick="getID(\''.$data->id_trx.'\')"><i class="fas fa-check"></i></button>';
 											}
 									?>
@@ -165,7 +170,7 @@
       idName: 'id',
 			table: 'app_trx',
 			data: {
-				status_pembayaran: 2
+				status_pembayaran: 3
 			}
     }
 

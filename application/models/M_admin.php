@@ -6,6 +6,12 @@ class M_admin extends CI_Model
   {
     $query = $this->db->get($table);
 
+    if ($table == 'app_role') {
+      $query = $this->db->select('*')
+                ->where('id != 2')
+                ->get($table);
+    }
+
     return $query->result();
 	}
 
