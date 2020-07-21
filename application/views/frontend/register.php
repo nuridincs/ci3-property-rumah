@@ -57,7 +57,7 @@
 									Register
 								</button>
 							</form>
-							<small>Sudah punya akun? silahkan <a href="/auth">login</a></small>
+							<small>Sudah punya akun? silahkan <a href="<?= base_url() ?>auth">login</a></small>
 						</div>
 					</div>
 				</div>

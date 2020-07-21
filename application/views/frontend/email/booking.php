@@ -7,6 +7,7 @@
     Jangan lupa lakukan konfirmasi apabila telah melakukan transaksi.<br><br>
 
     NOTED:<br><strong>KAMI TIDAK MENERIMA PEMBAYARAN TUNAI, CEK ATAU GIRO</strong>
+    <br><br>
 
     <strong>
       Terimakasih<br>

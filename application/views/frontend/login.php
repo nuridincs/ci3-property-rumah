@@ -60,7 +60,7 @@
 									Login
 								</button>
 							</form>
-							<small>Belum punya akun? silahkan <a href="/auth/register">register</a></small>
+							<small>Belum punya akun? silahkan <a href="<?= base_url() ?>auth/register">register</a></small>
 						</div>
 					</div>
 				</div>

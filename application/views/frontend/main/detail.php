@@ -60,7 +60,7 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">PT Duta Putra Land</h5>
-            <p class="card-text">0021-123456</p>
+            <p class="card-text">021-123456</p>
             <?php if ($this->session->userdata('status') == 'login') { ?>
               <a href="<?= base_url() ?>property/booking/<?= $item[0]->id_property ?>" class="btn btn-danger btn-block">Booking Sekarang</a>
             <?php } else { ?>

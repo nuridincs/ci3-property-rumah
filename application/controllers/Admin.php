@@ -297,6 +297,12 @@ class Admin extends CI_Controller{
 		}
 
 		$request = $this->input->post();
+
+		if ($table == 'app_trx') {
+			$this->db->where('id_trx', $id);
+			$this->db->delete('app_document');
+			$redirect = '/pembelian';
+		}
 		$this->db->where($idName, $id);
 		$this->db->delete($table);
 
