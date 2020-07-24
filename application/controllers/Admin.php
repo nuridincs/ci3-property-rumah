@@ -183,6 +183,18 @@ class Admin extends CI_Controller{
 		$pdf->Output('report.pdf', 'I');
 	}
 
+	private function getDtlTrx($id)
+	{
+		$sql = "SELECT * from
+			app_document
+			JOIN app_trx ON app_trx.id = app_document.id_trx
+			WHERE app_document.id = ".$id."";
+
+		$query = $this->db->query($sql);
+
+		return $query->row();
+	}
+
 	public function actionUpdateStatus()
 	{
 		$request = $this->input->post();
@@ -190,6 +202,9 @@ class Admin extends CI_Controller{
 		if ($request['table'] == 'app_trx') {
 			$dataBlok = $this->admin->getDataById($request['table'], $request['idName'], $request['id']);
 			$this->emailVerifikasi($dataBlok);
+		} else {
+			$dataBlok = $this->getDtlTrx($request['id']);
+			$this->sendBookingEmail($dataBlok->id_blok);
 		}
 
 		$this->db->where($request['idName'], $request['id']);
@@ -301,6 +316,13 @@ class Admin extends CI_Controller{
 		if ($table == 'app_trx') {
 			$this->db->where('id_trx', $id);
 			$this->db->delete('app_document');
+
+			$getTrx = $this->admin->getDataById('app_trx', 'id', $id);
+			$idBlok = $getTrx->id_blok;
+
+			$this->db->where('id', $idBlok);
+			$this->db->update('app_blok', array('status_blok' => 1));
+
 			$redirect = '/pembelian';
 		}
 		$this->db->where($idName, $id);
@@ -318,6 +340,37 @@ class Admin extends CI_Controller{
 		$this->db->delete('app_trx');
 
 		redirect('admin/pembelian');
+	}
+
+	public function sendBookingEmail($id_blok)
+	{
+		$data['booking'] = $this->admin->getBooking($id_blok);
+		$data['user'] = $this->admin->getUserByID($data['booking']->id_user);
+
+    $email = $data['user']->email;
+    $msg = $this->load->view('frontend/email/booking', $data, TRUE);
+
+		$config = Array(
+		  'protocol' => 'smtp',
+		  'smtp_host' => 'ssl://smtp.googlemail.com',
+		  'smtp_port' => 465,
+		  'smtp_user' => 'projekdevelopment@gmail.com',
+		  'smtp_pass' => 'd3veL0pm3nt',
+		  'mailtype' => 'html',
+		  'charset' => 'iso-8859-1'
+		);
+		$this->load->library('email', $config);
+		$this->email->set_newline("\r\n");
+		$this->email->from('noreply@ptdutaputraland.com', 'PT. Duta Putra Land');
+		$this->email->to($email);
+		$this->email->subject('Booking Berhasil');
+		$this->email->message($msg);
+		if (!$this->email->send()) {
+		  show_error($this->email->print_debugger());
+		}else{
+      // echo 'Success to send email';
+      // redirect('property/transaki');
+		}
 	}
 
 	public function emailVerifikasi($dataBlok)

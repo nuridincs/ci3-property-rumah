@@ -68,7 +68,7 @@
 										<tr>
 											<td><?= $no++ ?></td>
 											<td><?= $data->property_name ?></td>
-											<td><?= $data->blok ?></td>
+											<td><?= $data->blok.'-'.$data->no_kavling ?></td>
 											<td><?= $data->name ?></td>
 											<td>
 												<?= $document ?>

@@ -73,7 +73,7 @@ class Property extends CI_Controller
 
     $this->db->where('id', $request['blok']);
     $this->db->update('app_blok', array('status_blok' => 2));
-    $this->sendBookingEmail($request['blok']);
+    // $this->sendBookingEmail($request['blok']);
 
     $dataTrx = [
       'id_user' => $id_user,
