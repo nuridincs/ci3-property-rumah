@@ -201,10 +201,14 @@ class Admin extends CI_Controller{
 
 		if ($request['table'] == 'app_trx') {
 			$dataBlok = $this->admin->getDataById($request['table'], $request['idName'], $request['id']);
-			$this->emailVerifikasi($dataBlok);
+			if ($request['type'] == 'acc') {
+				$this->emailVerifikasi($dataBlok);
+			}
 		} else {
 			$dataBlok = $this->getDtlTrx($request['id']);
-			$this->sendBookingEmail($dataBlok->id_blok);
+			if ($request['type'] == 'acc') {
+				$this->sendBookingEmail($dataBlok->id_blok);
+			}
 		}
 
 		$this->db->where($request['idName'], $request['id']);
@@ -363,7 +367,7 @@ class Admin extends CI_Controller{
 		$this->email->set_newline("\r\n");
 		$this->email->from('noreply@ptdutaputraland.com', 'PT. Duta Putra Land');
 		$this->email->to($email);
-		$this->email->subject('Booking Berhasil');
+		$this->email->subject('Kelengkapan Dokumen');
 		$this->email->message($msg);
 		if (!$this->email->send()) {
 		  show_error($this->email->print_debugger());

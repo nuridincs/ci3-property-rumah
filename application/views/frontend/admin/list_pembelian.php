@@ -36,6 +36,9 @@
 										<td>Nama Pembeli</td>
 										<td>Data Dokumen</td>
 										<td>Status Pembayaran</td>
+										<?php if($this->session->userdata['role'] == 'manager'): ?>
+											<td>Acc Data</td>
+										<?php endif; ?>
                     <td>Aksi</td>
 									</tr>
 								</thead>
@@ -80,6 +83,12 @@
 												<a href="<?= base_url('admin/detailDokumen/pembayaran/'.$data->id_trx) ?>" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i></a>
 												<?= $konfirmasi ?>
 											</td>
+											<?php if($this->session->userdata['role'] == 'manager'): ?>
+											<td>
+												<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalAcc" onClick="getID(<?= $data->id ?>)"><i class="fa fa-check"></i>Acc Dokumen</button>
+												<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalAccPembayaran" onClick="getID(<?= $data->id_trx ?>)"><i class="fa fa-check"></i>Acc Pembayaran</button>
+											</td>
+											<?php endif; ?>
                       <td>
 												<a onclick="return confirm('apakah Anda yakin ingin menghapus data ini?')" href="<?= base_url('admin/actionDelete/app_trx/' . $data->id_trx) ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                       </td>
@@ -128,6 +137,46 @@
 									</div>
 								</div>
 							</div>
+
+							<div class="modal" id="modalAcc">
+								<div class="modal-dialog">
+									<div class="modal-content">
+
+										<!-- Modal Header -->
+										<div class="modal-header">
+											<h4 class="modal-title">Apakah anda yakin ingin ACC data dokumen ini?</h4>
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+										</div>
+
+										<!-- Modal footer -->
+										<div class="modal-footer">
+											<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-primary" id="accData">Submit</button>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+							<div class="modal" id="modalAccPembayaran">
+								<div class="modal-dialog">
+									<div class="modal-content">
+
+										<!-- Modal Header -->
+										<div class="modal-header">
+											<h4 class="modal-title">Apakah anda yakin ingin ACC data pembayaran ini?</h4>
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+										</div>
+
+										<!-- Modal footer -->
+										<div class="modal-footer">
+											<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-primary" id="accDataPembayaran">Submit</button>
+										</div>
+
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -171,6 +220,42 @@
 			table: 'app_trx',
 			data: {
 				status_pembayaran: 3
+			}
+    }
+
+    $.post('<?= base_url('admin/actionUpdateStatus'); ?>', formData, function( data ) {
+      window.location.reload();
+    });
+	});
+
+	$("#accDataPembayaran").click(function() {
+		const id = $('#idSelected').val();
+
+		const formData = {
+      id: id,
+      idName: 'id',
+			table: 'app_trx',
+			type: 'acc',
+			data: {
+				status_pembayaran: 3
+			}
+    }
+
+    $.post('<?= base_url('admin/actionUpdateStatus'); ?>', formData, function( data ) {
+      window.location.reload();
+    });
+	});
+
+	$("#accData").click(function() {
+		const id = $('#idSelected').val();
+
+		const formData = {
+      id: id,
+      idName: 'id',
+			table: 'app_document',
+			type: 'acc',
+			data: {
+				status_document: 2
 			}
     }
 

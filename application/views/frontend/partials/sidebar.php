@@ -30,13 +30,13 @@
 					<i class="fas fa-fw fa-user"></i>
 					<span>Data Cluster</span></a>
 			</li>
-
+			<?php if($this->session->userdata['role'] == 'manager'): ?>
 			<li class="nav-item <?= $aktif == 'user' ? 'active' : '' ?>">
 				<a class="nav-link" href="<?= base_url('admin/listUser') ?>">
 					<i class="fas fa-fw fa-users"></i>
 					<span>Data User</span></a>
 			</li>
-
+			<?php endif; ?>
 			<li class="nav-item <?= $aktif == 'laporan' ? 'active' : '' ?>">
 				<a class="nav-link" href="<?= base_url('admin/laporan') ?>">
 					<i class="fas fa-fw fa-file-invoice"></i>
