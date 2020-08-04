@@ -58,6 +58,11 @@
 												$konfirmasiDokumen = '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalDocument" onClick="getID(\''.$data->id.'\')"><i class="fa fa-check"></i></button>';
 											}
 
+											if($data->status_document == 3) {
+												$document = ' <span class="badge badge-danger">Berhasil Acc Dokumen</span>';
+												$konfirmasiDokumen = '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalDocument" onClick="getID(\''.$data->id.'\')"><i class="fa fa-check"></i></button>';
+											}
+
 											if($data->status_pembayaran == 1) {
 												$statusPembayaran = ' <span class="badge badge-warning">Belum dibayar</span>';
 												$konfirmasi = '<button class="btn btn-primary btn-icon btn-sm" data-toggle="modal" data-target="#modalPembayaran" onClick="getID(\''.$data->id_trx.'\')"><i class="fas fa-check"></i></button>';
@@ -65,6 +70,11 @@
 
 											if($data->status_pembayaran == 2) {
 												$statusPembayaran = '<span class="badge badge-success">Sudah di bayar</span>';
+												$konfirmasi = '<button class="btn btn-primary btn-icon btn-sm" data-toggle="modal" data-target="#modalPembayaran" onClick="getID(\''.$data->id_trx.'\')"><i class="fas fa-check"></i></button>';
+											}
+
+											if($data->status_pembayaran == 4) {
+												$statusPembayaran = '<span class="badge badge-success">Berhasil Acc Pembayaran</span>';
 												$konfirmasi = '<button class="btn btn-primary btn-icon btn-sm" data-toggle="modal" data-target="#modalPembayaran" onClick="getID(\''.$data->id_trx.'\')"><i class="fas fa-check"></i></button>';
 											}
 									?>
@@ -76,12 +86,29 @@
 											<td>
 												<?= $document ?>
                         <a href="<?= base_url('admin/detailDokumen/dokumen/'.$data->id) ?>" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
-												<?= $konfirmasiDokumen ?>
+												<?php
+													if ($this->session->userdata['role'] == 'admin' && $data->status_document == 3) {
+														echo $konfirmasiDokumen;
+													}
+
+													if ($this->session->userdata['role'] == 'manager') {
+														echo $konfirmasiDokumen;
+													}
+												?>
 											</td>
 											<td>
 												<?= $statusPembayaran ?>
 												<a href="<?= base_url('admin/detailDokumen/pembayaran/'.$data->id_trx) ?>" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i></a>
-												<?= $konfirmasi ?>
+
+												<?php
+													if ($this->session->userdata['role'] == 'admin' && $data->status_pembayaran == 4) {
+														echo $konfirmasi;
+													}
+
+													if ($this->session->userdata['role'] == 'manager') {
+														echo $konfirmasi;
+													}
+												?>
 											</td>
 											<?php if($this->session->userdata['role'] == 'manager'): ?>
 											<td>
@@ -237,7 +264,7 @@
 			table: 'app_trx',
 			type: 'acc',
 			data: {
-				status_pembayaran: 3
+				status_pembayaran: 4
 			}
     }
 
@@ -255,7 +282,7 @@
 			table: 'app_document',
 			type: 'acc',
 			data: {
-				status_document: 2
+				status_document: 3
 			}
     }
 

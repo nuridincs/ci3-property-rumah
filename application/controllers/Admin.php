@@ -201,12 +201,13 @@ class Admin extends CI_Controller{
 
 		if ($request['table'] == 'app_trx') {
 			$dataBlok = $this->admin->getDataById($request['table'], $request['idName'], $request['id']);
-			if ($request['type'] == 'acc') {
+
+			if (empty($request['type']) && $request['type'] != 'acc') {
 				$this->emailVerifikasi($dataBlok);
 			}
 		} else {
 			$dataBlok = $this->getDtlTrx($request['id']);
-			if ($request['type'] == 'acc') {
+			if (empty($request['type']) && $request['type'] != 'acc') {
 				$this->sendBookingEmail($dataBlok->id_blok);
 			}
 		}
